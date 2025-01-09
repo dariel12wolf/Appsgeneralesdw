@@ -236,11 +236,11 @@
     <div class="opciones">
 
         <!------------------------BLOQUE A--------------------------->
-        <a href="go:VIDCPU" class="opcion" data-modal="modal-algebra">
+        <a href="go:VIDCPU" class="opcion" >
             <img src="img/cpu.png" alt="Álgebra">
             <span>CPU</span>
         </a>
-        <a href="go:VIDORD" class="opcion" data-modal="modal-aritmetica">
+        <a href="go:VIDORD" class="opcion">
             <img src="img/ujfsc.png" alt="Aritmética">
             <span>ORDINARIO</span>
         </a>
@@ -270,40 +270,6 @@
     <!-- Modal Templates -->
     <!------------------------BLOQUE A--------------------------->
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const opciones = document.querySelectorAll('.opcion');
-            const modals = document.querySelectorAll('.modal');
-            const closeButtons = document.querySelectorAll('.close');
-
-            // Abrir modal
-            opciones.forEach(opcion => {
-                opcion.addEventListener('click', event => {
-                    event.preventDefault();
-                    const modalId = opcion.getAttribute('data-modal');
-                    const modal = document.getElementById(modalId);
-                    if (modal) modal.style.display = 'flex';
-                });
-            });
-
-            // Cerrar modal
-            closeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    button.parentElement.parentElement.style.display = 'none';
-                });
-            });
-
-            // Cerrar modal al hacer clic fuera del contenido
-            modals.forEach(modal => {
-                modal.addEventListener('click', event => {
-                    if (event.target === modal) {
-                        modal.style.display = 'none';
-                    }
-                });
-            });
-        });
-
-    </script>
     <script>
         function toggleDropdown(button) {
             const dropdown = button.parentElement;
