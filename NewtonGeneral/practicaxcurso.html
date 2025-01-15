@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+
+    .opciones {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 15px;
+        margin: 20px;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .opcion {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        text-decoration: none;
+        background: linear-gradient(135deg, #0050b1, #007bff8b);
+        color: #fff;
+        border-radius: 12px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .opcion img {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 10px;
+    }
+
+    .opcion span {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .opcion:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 300px;
+        text-align: left;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content h2 {
+        margin-top: 0;
+        color: #007bff;
+        text-align: center;
+        text-decoration: underline;
+    }
+
+    .modal-content ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .modal-content ul li {
+        margin: 10px 0;
+        display: flex;
+
+
+    }
+
+    .modal-content ul li a {
+        text-decoration: none;
+        color: #505050;
+        font-weight: bold;
+    }
+
+    .modal-content ul li a:hover {
+        color: #0056b3;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+</style>
+
+<body>
+    <div class="opciones">
+        <!------------------------BLOQUE A--------------------------->
+        <a href="#" class="opcion" data-modal="modal-algebra">
+            <img src="img/algebra.png" alt="Álgebra">
+            <span>Álgebra</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-aritmetica">
+            <img src="img/aritmetica.png" alt="Aritmética">
+            <span>Aritmética</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-geometria">
+            <img src="img/geometria.png" alt="Geometría">
+            <span>Geometría</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-trigonometria">
+            <img src="img/trigonometria.png" alt="Geometría">
+            <span>Trigonometría</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-estadistica">
+            <img src="img/estadistica.png" alt="Geometría">
+            <span>Estadística</span>
+        </a>
+        <!------------------------BLOQUE B--------------------------->
+        <a href="#" class="opcion" data-modal="modal-anatomia">
+            <img src="img/anatomia.png" alt="Anatomía">
+            <span>Anatomía</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-biologia">
+            <img src="img/biologia.png" alt="Biología">
+            <span>Biología</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-fisica">
+            <img src="img/fisica.png" alt="Anatomía">
+            <span>Física</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-quimica">
+            <img src="img/quimica.png" alt="Biología">
+            <span>Química</span>
+        </a>
+        <!------------------------BLOQUE C--------------------------->
+
+        <a href="#" class="opcion" data-modal="modal-literatura">
+            <img src="img/literatura.png" alt="Literatura">
+            <span>Literatura</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-aptitud">
+            <img src="img/aptitud.png" alt="Aptitud Verbal">
+            <span>Aptitud Verbal</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-lenguaje">
+            <img src="img/lenguaje.png" alt="Lenguaje">
+            <span>Lenguaje</span>
+        </a>
+        <!------------------------BLOQUE D--------------------------->
+        <a href="#" class="opcion" data-modal="modal-HP">
+            <img src="img/hp.png" alt="Historia del Perú">
+            <span>Historia del Perú</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-HU">
+            <img src="img/hu.png" alt="Historia Universal">
+            <span>Historia Universal</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-geografia">
+            <img src="img/geografia.png" alt="Geografia">
+            <span>Geografía</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-psicologia">
+            <img src="img/psicologia.png" alt="Psicologia">
+            <span>Psicología</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-filosofia">
+            <img src="img/filosofia.png" alt="Filosofia">
+            <span>Filosofía</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-economia">
+            <img src="img/economia.png" alt="Economia">
+            <span>Economía</span>
+        </a>
+        <a href="#" class="opcion" data-modal="modal-ciudadania">
+            <img src="img/ciudadania.png" alt="ciudadania">
+            <span>Ciudadania</span>
+        </a>
+    </div>
+
+    <!-- Modal Templates -->
+    <!------------------------BLOQUE A--------------------------->
+
+    <div id="modal-algebra" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Álgebra</h2>
+            <ul>
+                <li><a href="go:ALG01">Tema 1: Teoria de Exponentes</a> </li>
+                <li><a href="go:ALG02">Tema 2: Polinomios</a></li>
+                <li><a href="go:ALG03">Tema 3: Productos Notables</a></li>
+                <li><a href="go:ALG04">Tema 4: División de polinomios</a></li>
+                <li><a href="go:ALG05">Tema 5: Cocientes Notables</a></li>
+                <li><a href="go:ALG06">Tema 6: Factorización</a></li>
+                <li><a href="go:ALG07">Tema 7: </a></li>
+                <li><a href="go:ALG08">Tema 8: </a></li>
+                <li><a href="go:ALG09">Tema 9: </a></li>
+                <li><a href="go:ALG10">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="modal-aritmetica" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Aritmética</h2>
+            <ul>
+                <li><a href="tema1-aritmetica.html">Tema 1: Lógica proposicional</a></li>
+                <li><a href="tema2-aritmetica.html">Tema 2: Teoría de conjuntos</a></li>
+                <li><a href="tema3-aritmetica.html">Tema 3: Numeración</a></li>
+                <li><a href="tema3-aritmetica.html">Tema 4: Divisibilidad</a></li>
+                <li><a href="tema3-aritmetica.html">Tema 5: Números primos y compuestos</a></li>
+                <li><a href="tema3-aritmetica.html">Tema 6: Números racionales</a></li>
+                <li><a href="tema3-aritmetica.html">Tema 7: </a></li>
+                <li><a href="tema3-aritmetica.html">Tema 8: </a></li>
+                <li><a href="tema3-aritmetica.html">Tema 9: </a></li>
+                <li><a href="tema3-aritmetica.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-geometria" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Geometría</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Segmentos - Ángulos</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Triángulos</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Congruencia de triángulos</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Polígonos - Cuadriláteros</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Circunferncia</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Puntos notables</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-trigonometria" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Trigonometría</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Sistema de medida angular - Sector circular</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Razones trigonométricas de ángulos agudos</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Razones trigonométricas de ángulos en posicion normal</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Reducción al primer cuadrante</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Identidades trigonométricas</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Ángulos compuestos y dobles</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-estadistica" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Estadística</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Tabla de distribución de frecuencias I</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Tabla de distribución de frecuencias II</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Gráficos estadísticos</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Medida de tendencia central</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Medidas de posición</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Medidas de dispersión</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <!------------------------BLOQUE B--------------------------->
+    <div id="modal-anatomia" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Anatomía</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Tejido epitelial</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Tejido conectivo - Tejido adiposo</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Tejido cartilaginoso - Tejido óseo</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Tejido muscular - Tejido nervioso</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Tejido sanguíneo</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Aparato cardiovascular</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-biologia" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Biología</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Origen de la vida - Evolución</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Bioelementos - Agua - Sales minerales</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Glúcidos - Lípidos - Proteínas</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Vitaminas - Ácidos nucleicos</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Citología</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Metabolismo celular</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-fisica" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Física</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Vectores</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Cinemática I</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Cinemática II</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Estática</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Dinámica</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Trabajo - Potencia - Energía</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-quimica" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Química</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Estructura atómica</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Configuración electrónica - Tabla periódica</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Enlace Químico</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Nomenclatura inorgánica</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Unidades químicas de masa</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Estado gaseoso</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!------------------------BLOQUE C--------------------------->
+    <div id="modal-literatura" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Literatura</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Teoría Literaria</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Clasicismo - Medievalismo</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Renacimiento - Neoclasicismo</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Romanticismo - Realismo</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Simbolismo - Vanguardismo</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Siglo de oro Español</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-aptitud" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Aptitud Verbal</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Etimología grecolatina</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Relaciones semánticas y formales</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Sinonimia</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Antonimia</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Series verbales</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Analogías</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-lenguaje" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Lenguaje</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: La comunicación y el lenguaje</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: El signo lingüístico - Sonidos del lenguaje</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: La morfología lingüística</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Ortografía</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Lenguaje audiovisual</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Sustantivos</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!------------------------BLOQUE D--------------------------->
+    <div id="modal-HP" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Historia del Perú</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Poblamiento americano y peruano</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Altas culturas</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Tahuantinsuyo</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Invasión europea al Tahuantinsuyo</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Virreinato</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Rebeliones indígenas</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-HU" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Historia Universal</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Antropogénesis - Prehistoria</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Cultura Caldeo - Asiria - Cultura Egipcia</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Cultura Griega</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Cultura Romana</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Bárbaros - Imperio Carolingio / Imperio Bizantino</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Árabes</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-geografia" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Geografía</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Ciencia geográfica</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: El universo</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Heliósfera</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: La tierra</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Geósfera</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Atmósfera</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-psicologia" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Psicología</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Ciencia psicológica</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Escuelas psicológicas</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Factores biológicos y ambientales del comportamiento humano</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Desarrollo humano - Sexualidad</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Neurociencia</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Sencación - Percepción</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-filosofia" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Filosofía</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Historia de la filosofía</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Filosofía presocrática</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Filosofía socrática</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Filosofía grecorromana</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Filosofía medieval</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Filosofía moderna</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-economia" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Economía</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: La ciencia económica</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Evolución histórica de la economía</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Necesidades humanas, bienes y servicios</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: Procesos económicos</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Factores clásicos de la producción</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: La producción</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-ciudadania" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ciudadanía</h2>
+            <ul>
+                <li><a href="tema1-algebra.html">Tema 1: Sujeto de derecho</a> </li>
+                <li><a href="tema2-algebra.html">Tema 2: Derechos humanos</a></li>
+                <li><a href="tema3-algebra.html">Tema 3: Familia y parentesco</a></li>
+                <li><a href="tema1-algebra.html">Tema 4: El matrimonio</a></li>
+                <li><a href="tema2-algebra.html">Tema 5: Estado - Norma jurídica</a></li>
+                <li><a href="tema3-algebra.html">Tema 6: Garantías contitucionales</a></li>
+                <li><a href="tema1-algebra.html">Tema 7: </a></li>
+                <li><a href="tema2-algebra.html">Tema 8: </a></li>
+                <li><a href="tema3-algebra.html">Tema 9: </a></li>
+                <li><a href="tema1-algebra.html">Tema 10: </a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const opciones = document.querySelectorAll('.opcion');
+            const modals = document.querySelectorAll('.modal');
+            const closeButtons = document.querySelectorAll('.close');
+
+            // Abrir modal
+            opciones.forEach(opcion => {
+                opcion.addEventListener('click', event => {
+                    event.preventDefault();
+                    const modalId = opcion.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) modal.style.display = 'flex';
+                });
+            });
+
+            // Cerrar modal
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.parentElement.parentElement.style.display = 'none';
+                });
+            });
+
+            // Cerrar modal al hacer clic fuera del contenido
+            modals.forEach(modal => {
+                modal.addEventListener('click', event => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>
