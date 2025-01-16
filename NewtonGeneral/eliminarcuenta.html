@@ -122,41 +122,44 @@ footer {
 
 </style>
 <body>
-  <header>
-    <h1>Cómo Eliminar tu Cuenta</h1>
-  </header>
+    <header>
+        <h1 id="title">Cómo Eliminar tu Cuenta</h1>
+        <button onclick="changeLanguage()">
+          <span id="btn-language">Cambiar a Inglés</span>
+        </button>
+      </header>
 
   <main>
     <section class="instructions">
-      <h2>Paso a paso para eliminar tu cuenta</h2>
+        <h2 id="step-title">Paso a paso para eliminar tu cuenta</h2>
       <div class="step">
-        <h3>Paso 1: Ir al perfil del usuario</h3>
+        <h3 id="step1-title">Paso 1: Ir al perfil del usuario</h3>
         <img src="https://i.ibb.co/mbTLw2t/02cb6ae2-e1d2-436a-913b-2dd572e6298d.jpg" alt="Ir al perfil" class="step-image">
-        <p>Accede a tu perfil tocando o haciendo clic en tu avatar en la esquina superior derecha.</p>
+        <p id="step1-desc">Accede a tu perfil tocando o haciendo clic en tu avatar en la esquina superior derecha.</p>
       </div>
 
       <div class="step">
-        <h3>Paso 2: Desplazarse a la parte inferior del perfil</h3>
+        <h3 id="step2-title">Paso 2: Desplazarse a la parte inferior del perfil</h3>
         <img src="https://i.ibb.co/d7B0zhP/ac189bf0-2afe-4013-a63b-4c8e6556f19b.jpg" alt="Desplazarse abajo" class="step-image">
-        <p>Desliza o desplázate hacia abajo en tu perfil hasta llegar al final.</p>
+        <p id="step2-desc">Desliza o desplázate hacia abajo en tu perfil hasta llegar al final.</p>
       </div>
 
       <div class="step">
-        <h3>Paso 3: Hacer clic en "DARME DE BAJA"</h3>
+        <h3 id="step3-title">Paso 3: Hacer clic en "DARME DE BAJA"</h3>
         <img src="https://i.ibb.co/JQHXwcw/06076ee8-a64d-4dea-bda8-e4e660d01b76.jpg" alt="Clic en DARME DE BAJA" class="step-image">
-        <p>Haz clic en el botón "DARME DE BAJA" que encontrarás al final de la página de tu perfil.</p>
+        <p id="step3-desc">Haz clic en el botón "DARME DE BAJA" que encontrarás al final de la página de tu perfil.</p>
       </div>
       
       <div class="step">
-        <h3>Paso 4: Responder "Sí"</h3>
+        <h3 id="step4-title">Paso 4: Responder "Sí"</h3>
         <img src="https://i.ibb.co/rQ9T4gk/cce7db72-ea8f-4c5e-bba0-050eb4a879e1.jpg" alt="Confirmación de baja" class="step-image">
-        <p>Cuando se te pregunte si deseas eliminar tu cuenta, responde "Sí" y tu cuenta será eliminada.</p>
+        <p id="step4-desc">Cuando se te pregunte si deseas eliminar tu cuenta, responde "Sí" y tu cuenta será eliminada.</p>
       </div>
     </section>
 
     <section class="contact">
-      <h2>¿Necesitas ayuda?</h2>
-      <p>Si tienes problemas o deseas asistencia adicional, puedes enviar un correo a nuestro desarrollador:</p>
+      <h2 id="contact-title">¿Necesitas ayuda?</h2>
+      <p id="contact-desc">Si tienes problemas o deseas asistencia adicional, puedes enviar un correo a nuestro desarrollador:</p>
       <p><strong>Correo: <a href="mailto:arielxdo164@gmail.com">arielxdo164@gmail.com</a></strong></p>
     </section>
   </main>
@@ -164,5 +167,68 @@ footer {
   <footer>
     <p>&copy; 2025 Todos los derechos reservados.</p>
   </footer>
+
+    <script>
+    // Cambiar el idioma entre español e inglés
+    const language = {
+      es: {
+        title: "Cómo Eliminar tu Cuenta",
+        btnLanguage: "Cambiar a Inglés",
+        stepTitle: "Paso a paso para eliminar tu cuenta",
+        step1Title: "Paso 1: Ir al perfil del usuario",
+        step1Desc: "Accede a tu perfil tocando o haciendo clic en tu avatar en la esquina superior derecha.",
+        step2Title: "Paso 2: Desplazarse a la parte inferior del perfil",
+        step2Desc: "Desliza o desplázate hacia abajo en tu perfil hasta llegar al final.",
+        step3Title: "Paso 3: Hacer clic en 'DARME DE BAJA'",
+        step3Desc: "Haz clic en el botón 'DARME DE BAJA' que encontrarás al final de la página de tu perfil.",
+        step4Title: "Paso 4: Responder 'Sí'",
+        step4Desc: "Cuando se te pregunte si deseas eliminar tu cuenta, responde 'Sí' y tu cuenta será eliminada.",
+        contactTitle: "¿Necesitas ayuda?",
+        contactDesc: "Si tienes problemas o deseas asistencia adicional, puedes enviar un correo a nuestro desarrollador:",
+      },
+      en: {
+        title: "How to Delete Your Account",
+        btnLanguage: "Change to Spanish",
+        stepTitle: "Step by Step to Delete Your Account",
+        step1Title: "Step 1: Go to User Profile",
+        step1Desc: "Access your profile by clicking on your avatar at the top right.",
+        step2Title: "Step 2: Scroll to the Bottom of the Profile",
+        step2Desc: "Scroll down on your profile until you reach the bottom.",
+        step3Title: "Step 3: Click 'UNSUBSCRIBE'",
+        step3Desc: "Click the 'UNSUBSCRIBE' button at the bottom of your profile page.",
+        step4Title: "Step 4: Confirm 'Yes'",
+        step4Desc: "When asked if you want to delete your account, respond 'Yes' and your account will be deleted.",
+        contactTitle: "Need Help?",
+        contactDesc: "If you encounter issues or need additional assistance, you can email our developer:",
+      }
+    };
+
+    let currentLanguage = 'es';
+
+    function changeLanguage() {
+      currentLanguage = (currentLanguage === 'es') ? 'en' : 'es';
+
+      document.getElementById('title').innerText = language[currentLanguage].title;
+      document.getElementById('step-title').innerText = language[currentLanguage].stepTitle;
+      document.getElementById('step1-title').innerText = language[currentLanguage].step1Title;
+      document.getElementById('step1-desc').innerText = language[currentLanguage].step1Desc;
+      document.getElementById('step2-title').innerText = language[currentLanguage].step2Title;
+      document.getElementById('step2-desc').innerText = language[currentLanguage].step2Desc;
+      document.getElementById('step3-title').innerText = language[currentLanguage].step3Title;
+      document.getElementById('step3-desc').innerText = language[currentLanguage].step3Desc;
+      document.getElementById('step4-title').innerText = language[currentLanguage].step4Title;
+      document.getElementById('step4-desc').innerText = language[currentLanguage].step4Desc;
+      document.getElementById('contact-title').innerText = language[currentLanguage].contactTitle;
+      document.getElementById('contact-desc').innerText = language[currentLanguage].contactDesc;
+      document.getElementById('btn-language').innerText = language[currentLanguage].btnLanguage;
+    }
+
+    // Detectar el idioma del navegador y cambiar automáticamente
+    const userLang = navigator.language || navigator.userLanguage;
+    if (userLang.startsWith('en')) {
+      changeLanguage(); // Cambiar a inglés si el idioma del navegador es inglés
+    }
+  </script>
+
 </body>
 </html>
