@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secciones Desplegables</title>
+    <link rel="stylesheet" href="css/selec.css">
+</head>
+
+<body>
+
+    <!-- Header with Back Icon -->
+    <header class="header">
+        <a href="index.html" class="back-icon"><img style="width: 30px; transform: rotate(180deg);" src="img/next.png"
+                alt=""></a>
+    </header>
+
+    <!-- Dropdown Sections -->
+    <section class="dropdown-container">
+        <!-- Dropdown structure -->
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                <img src="img/algebra.png" alt="Icono Sección 1" class="icono">ALGEBRA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1AEHhKVp4tOOFbNC3wlnzYqLAzsrsnKB_/view?usp=share_link">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                <img src="img/arit.png" alt="Icono Sección 2" class="icono">ARITMETICA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1Gby84MSlFgw4R-aT3pOmVp7vh3fLCNeC/view?usp=sharing">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                <img src="img/geo.png" alt="Icono Sección 2" class="icono">GEOMETRIA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1OgVAwGtJ2CdIi_RtCLMNaivHFRCjrkdg/view?usp=sharing">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                <img src="img/trigo.png" alt="Icono Sección 2" class="icono">TRIGONOMETRIA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1mBH1xJDzLdCJE8lTUy7-Szn7FrCaoI47/view?usp=sharing">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                <img src="img/esta.png" alt="Icono Sección 2" class="icono">ESTADISTICA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1pgQPor6mO7Y5lKaBlKCK76QKc7ng_Vn4/view?usp=sharing">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                <img src="img/anat.png" alt="Icono Sección 2" class="icono">ANATOMIA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1_FlG2EAIy6Vi00D3pwwO8Cjy6Jl3rP_r/view?usp=sharing">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                <img src="img/bio.png" alt="Icono Sección 2" class="icono">BIOLOGIA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1s91EjgkaqsuGn-pczEzv-A7YUs169emC/view?usp=sharing">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                <img src="img/quimi.png" alt="Icono Sección 2" class="icono">QUIMICA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="go:BB01">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                <img src="img/fisi.png" alt="Icono Sección 2" class="icono">FISICA ELEMENTAL
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="go:BB01">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                 <img src="img/leng.png" alt="Icono Sección 2" class="icono">LENGUAJE
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="go:BB01">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                 <img src="img/lite.png" alt="Icono Sección 2" class="icono">LITERATURA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1XgB9vgzq7nAWGRo4oSldRTUGW_wwdJWd/view?usp=sharing">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                 <img src="img/verbal.png" alt="Icono Sección 2" class="icono">APTITUD VERBAL
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1iAA4x28YJhONw16iro_LGeyMoSFgU9B4/view?usp=sharing">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                 <img src="img/psico.png" alt="Icono Sección 2" class="icono">PSICOLOGIA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1PiOy2vt32L99xnNFhkyG3pY04NC5-eoJ/view?usp=sharing">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                 <img src="img/filo.png" alt="Icono Sección 2" class="icono">FILOSOFIA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="go:BB01">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                 <img src="img/eco.png" alt="Icono Sección 2" class="icono">ECONOMIA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/185pQAIRzrpuQJE5p3SdkPlfq0NY62Ehw/view?usp=sharing">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                 <img src="img/ciu.png" alt="Icono Sección 2" class="icono">CIUDADANIA
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="go:BB01">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                 <img src="img/geogra.png" alt="Icono Sección 2" class="icono">ESPACIO GEOGRAFICO
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1a5Oh38BYYgW2gwEF2k1G7m87mVYHxdYZ/view?usp=sharing">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                 <img src="img/hp.png" alt="Icono Sección 2" class="icono">HISTORIA DEL PERU
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="https://drive.google.com/file/d/1bNExSKkUjBdi9bMzrnBXCV0GCMJmvv-L/view?usp=sharingruta/teoria2.hltm">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown(this)">
+                 <img src="img/hu.png" alt="Icono Sección 2" class="icono">HISTORIA DEL UNIVERSAL
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="dropdown-content">
+                <a href="go:BB01">Teoría <img src="img/next.png"
+                    alt=""></a>
+                <a href="go:PRA00">Práctica <img src="img/next.png"
+                    alt=""></a>
+            </div>
+        </div>
+
+        <!-- Repeat for other sections up to 8... -->
+    </section>
+
+    <!-- JavaScript for Dropdown Toggle -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

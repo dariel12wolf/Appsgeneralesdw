@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="">
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newton App</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/swiper-bundle-min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
+
+
+</head>
+
+<body>
+  <div id="offlineMessage">
+    <div class="offline-content">
+        <img src="img/conexion.png" alt="No conexión" class="offline-icon">
+        <p>No tienes conexión a internet</p>
+        <p>Prueba más tarde</p>
+    </div>
+</div>
+
+
+  <!--AQUI VA EL CONTENIDO CENTRAL-->
+  <h3 class="title1">CURSOS <span style="font-size: 12px;"><a
+        style="vertical-align: middle; text-decoration: none; color: rgb(0, 106, 255);" href="seleccionC.html">VER MAS
+      </a><img
+        style="width: 15px; height: 15px; background-color:rgb(0, 106, 255); vertical-align: middle; border-radius: 15px;"
+        src="img/next.png" alt=""></span></h3>
+  <div class="wc-slide-containder">
+    <div class="wc-slider">
+      <div class="wc-slide-item" data-topic="Álgebra"
+        data-theory-link="https://drive.google.com/file/d/1AEHhKVp4tOOFbNC3wlnzYqLAzsrsnKB_/view?usp=share_link"
+        data-practice-link="go:PRA00">
+        <img src="img/algebra.png" loading="lazy" alt="Thumbnail">
+        <h4 class="cb-title">ALGEBRA</h4>
+      </div>
+      <div class="wc-slide-item" data-topic="Geometría"
+        data-theory-link="https://drive.google.com/file/d/1OgVAwGtJ2CdIi_RtCLMNaivHFRCjrkdg/view?usp=sharing"
+        data-practice-link="go:PRA00">
+        <img src="img/geo.png" loading="lazy" alt="Thumbnail">
+        <h4 class="cb-title">GEOMETRIA</h4>
+      </div>
+      <div class="wc-slide-item" data-topic="Trigonometría"
+        data-theory-link="https://drive.google.com/file/d/1mBH1xJDzLdCJE8lTUy7-Szn7FrCaoI47/view?usp=sharing"
+        data-practice-link="go:PRA00">
+        <img src="img/trigo.png" loading="lazy" alt="Thumbnail">
+        <h4 class="cb-title">TRIGONOMETRIA</h4>
+      </div>
+      <div class="wc-slide-item" data-topic="Aritmética"
+        data-theory-link="https://drive.google.com/file/d/1Gby84MSlFgw4R-aT3pOmVp7vh3fLCNeC/view?usp=sharing"
+        data-practice-link="go:PRA00">
+        <img src="img/arit.png" loading="lazy" alt="Thumbnail">
+        <h4 class="cb-title">ARITMETICA</h4>
+      </div>
+      <div class="wc-slide-item" data-topic="Anatomia"
+        data-theory-link="https://drive.google.com/file/d/1_FlG2EAIy6Vi00D3pwwO8Cjy6Jl3rP_r/view?usp=sharing"
+        data-practice-link="go:PRA00">
+        <img src="img/anat.png" loading="lazy" alt="Thumbnail">
+        <h4 class="cb-title">ANATOMIA</h4>
+      </div>
+      <div class="wc-slide-item" data-topic="Historia del Perú"
+        data-theory-link="https://drive.google.com/file/d/1bNExSKkUjBdi9bMzrnBXCV0GCMJmvv-L/view?usp=sharing"
+        data-practice-link="go:PRA00">
+        <img src="img/hp.png" loading="lazy" alt="Thumbnail">
+        <h4 class="cb-title">HISTORIA DEL <br> PERÚ</h4>
+      </div>
+      <div class="wc-slide-item" data-topic="Psicología"
+        data-theory-link="https://drive.google.com/file/d/1PiOy2vt32L99xnNFhkyG3pY04NC5-eoJ/view?usp=sharing"
+        data-practice-link="go:PRA00">
+        <img src="img/psico.png" loading="lazy" alt="Thumbnail">
+        <h4 class="cb-title">PSICOLOGIA</h4>
+      </div>
+      <div class="wc-slide-item" data-topic="Física Elemental" data-theory-link="go:BB01" 
+      data-practice-link="go:PRA00">
+        <img src="img/fisi.png" loading="lazy" alt="Thumbnail">
+        <h4 class="cb-title">FISICA ELEMENTAL</h4>
+      </div>
+      <div class="wc-slide-item" data-topic="Literatura"
+        data-theory-link="https://drive.google.com/file/d/1XgB9vgzq7nAWGRo4oSldRTUGW_wwdJWd/view?usp=sharing"
+        data-practice-link="go:PRA00">
+        <img src="img/lite.png" loading="lazy" alt="Thumbnail">
+        <h4 class="cb-title">LITERATURA</h4>
+      </div>
+      <div class="wc-slide-item" data-topic="Geografía"
+        data-theory-link="https://drive.google.com/file/d/1a5Oh38BYYgW2gwEF2k1G7m87mVYHxdYZ/view?usp=sharing"
+        data-practice-link="go:PRA00">
+        <img src="img/geogra.png" loading="lazy" alt="Thumbnail">
+        <h4 class="cb-title">GEOGRAFIA</h4>
+      </div>
+      <!-- Agrega más items con los enlaces personalizados -->
+    </div>
+  </div>
+  <!-- Modal -->
+  
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-content">
+      <span class="close-modal" id="close-modal">&times;</span>
+      <h2 id="modal-title">Teoría y Práctica</h2>
+      <div class="modal-options">
+        <a href="#" id="theory-link" class="modal-button">Teoría</a>
+        <a href="#" id="practice-link" class="modal-button">Práctica</a>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="title1">ANUNCIOS</h3> <br>
+  <section class="projetos-slider">
+    <div>
+      <a href="#"><img src="img/demo.jpg" alt="img1"></a>
+      <span>
+      </span>
+    </div>
+
+    <div>
+      <a href="#"><img src="img/demo2.jpg" alt="img2"></a>
+      <span>
+
+      </span>
+    </div>
+
+    <div>
+      <a href="#"><img src="img/demo.jpg" alt="img3"></a>
+      <span>
+
+      </span>
+    </div>
+
+    <div>
+      <a href="#"><img src="img/demo2.jpg" alt="img4"></a>
+      <span>
+
+      </span>
+    </div>
+
+  </section>
+<!--
+  <div class="slider-container">
+    <div class="slider-track" id="sliderTrack">
+      <a href="https://example.com/page1" class="slider-link">
+        <div class="slider-image" style="background-image: url('img/demo.jpg');"></div>
+      </a>
+      <a href="https://example.com/page2" class="slider-link">
+        <div class="slider-image" style="background-image: url('img/demo.jpg');"></div>
+      </a>
+      <a href="https://example.com/page3" class="slider-link">
+        <div class="slider-image" style="background-image: url('img/demo.jpg');"></div>
+      </a>
+      <a href="https://example.com/page4" class="slider-link">
+        <div class="slider-image" style="background-image: url('img/demo.jpg');"></div>
+      </a>
+    </div>
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </div>
+  -->
+  
+
+  <div class="izquierdabody">
+    <a style="  text-decoration: none;" href="go:BB01">
+      <div class="contenido">
+        <div class="imgcontenido">
+          <img style="border-radius: 50px;" src="img/libro.gif" alt="">
+        </div>
+        <div class="textocontenido">
+          <p class="title">BIBLIOTECA NER</p>
+          <p>¡Vamos a estudiar! Nuestra meta es ser los proximos CACHIMBOS NER!. Teoria en PDF, PPT, y mucho más.
+          </p>
+          <span style="font-weight: 900; vertical-align: middle;  text-decoration: none; ">Ver más<img
+              style="width: 20px; vertical-align: middle;  text-decoration: none; background-color: #0047ba; border-radius: 15px;"
+              src="img/next.png" alt=""></span>
+        </div>
+      </div>
+    </a>
+    <a style="  text-decoration: none;" href="go:VID00">
+      <div class="contenido">
+        <div class="imgcontenido">
+          <img style="border-radius: 50px;" src="img/video.gif" alt="">
+        </div>
+        <div class="textocontenido">
+          <p class="title">VIDEOS EDUCATIVOS NER</p>
+          <p>¡Videos personalizados! Tus maestros favoritos con sus mejores clases en video. Continua preparandote desde
+            casa o en cualquier lugar.
+          </p>
+          <span style="font-weight: 900; vertical-align: middle;  text-decoration: none; ">Ver más<img
+              style="width: 20px; vertical-align: middle;  text-decoration: none; background-color: #0047ba; border-radius: 15px;"
+              src="img/next.png" alt=""></span>
+        </div>
+      </div>
+    </a>
+    <a style="  text-decoration: none;" href="go:PRA00">
+      <div class="contenido">
+        <div class="imgcontenido">
+          <img style="border-radius: 50px;" src="img/exam.gif" alt="">
+        </div>
+        <div class="textocontenido">
+          <p class="title">PRACTICA NER</p>
+          <p>¡Retos de estudio! Prácticas del tipo examen de admisión, ¡solo para ti!. Perfecciona y practica las
+            preguntas fijas que podran estar en tu examen de admisión.
+          </p>
+          <span style="font-weight: 900; vertical-align: middle;  text-decoration: none; ">Ver más<img
+              style="width: 20px; vertical-align: middle;  text-decoration: none; background-color: #0047ba; border-radius: 15px;"
+              src="img/next.png" alt=""></span>
+        </div>
+      </div>
+    </a>
+
+    <a style="  text-decoration: none;" href="go:MISC">
+      <div class="contenido">
+        <div class="imgcontenido">
+          <img style="border-radius: 50px;" src="img/multi.gif" alt="">
+        </div>
+        <div class="textocontenido">
+          <p class="title">EXPLORA Y PARTICIPA</p>
+          <p>Descubre oportunidades únicas para interactuar y crecer. Participa en debates en el Foro, encuentra tu camino con el Test Vocacional y mantente al día con los próximos Eventos diseñados para ti. ¡Tu desarrollo comienza aquí!
+          </p>
+          <span style="font-weight: 900; vertical-align: middle;  text-decoration: none; ">Ver más<img
+              style="width: 20px; vertical-align: middle;  text-decoration: none; background-color: #0047ba; border-radius: 15px;"
+              src="img/next.png" alt=""></span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+  <script>
+    function updateOnlineStatus() {
+    const offlineMessage = document.getElementById("offlineMessage");
+    
+    if (navigator.onLine) {
+        offlineMessage.style.display = "none";
+    } else {
+        offlineMessage.style.display = "flex";
+    }
+}
+
+window.addEventListener("online", updateOnlineStatus);
+window.addEventListener("offline", updateOnlineStatus);
+
+updateOnlineStatus();
+
+  </script>
+  <!--AQUI ESTA EL FOOOTER-->
+  <script>
+    $(document).ready(function () {
+      $('.projetos-slider').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        arrows: false,
+        dots: true,
+        adaptiveHeight: true,
+
+
+        // slider responsivo 
+        responsive: [
+          {
+            breakpoint: 1121,
+            settings: {
+              slidesToShow: 2,
+              autoplay: true,
+              adaptiveHeight: true,
+            }
+          },
+
+          {
+            breakpoint: 769,
+            settings: {
+              slidesToShow: 1,
+              autoplay: true,
+              adaptiveHeight: true,
+            }
+          }
+        ]
+
+      });
+
+    });
+  </script>
+  <!-----------<script>
+    const sliderTrack = document.getElementById('sliderTrack');
+    const progressBar = document.getElementById('progressBar');
+    const images = Array.from(sliderTrack.children);
+    const totalImages = images.length;
+    let currentIndex = 0;
+    let isDragging = false;
+    let startX;
+
+    // Función para mover el slider automáticamente
+    function startSlider() {
+      progressBar.style.width = '0%';
+      progressBar.style.transition = 'none';
+
+      setTimeout(() => {
+        progressBar.style.transition = 'width 3s linear';
+        progressBar.style.width = '100%';
+      }, 10);
+
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % totalImages;
+        updateSliderPosition();
+        startSlider();
+      }, 3000);
+    }
+
+    // Actualiza la posición del slider para mostrar la imagen centrada
+    function updateSliderPosition() {
+      const offset = (sliderTrack.offsetWidth / 3) - (images[currentIndex].offsetWidth / 3);
+      const translateX = -(currentIndex * images[currentIndex].offsetWidth) + offset;
+      sliderTrack.style.transform = `translateX(${translateX}px)`;
+    }
+
+    // Funcionalidad de arrastre
+    sliderTrack.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.pageX;
+      sliderTrack.style.cursor = 'grabbing';
+    });
+
+    sliderTrack.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const diff = e.pageX - startX;
+      sliderTrack.style.transform = `translateX(${-(currentIndex * images[currentIndex].offsetWidth) + diff}px)`;
+    });
+
+    sliderTrack.addEventListener('mouseup', () => {
+      isDragging = false;
+      sliderTrack.style.cursor = 'grab';
+    });
+
+    sliderTrack.addEventListener('mouseleave', () => {
+      isDragging = false;
+    });
+
+    // Inicia el slider automático
+    startSlider();
+
+    // Ajusta la posición del slider al cambiar el tamaño de la ventana
+    window.addEventListener('resize', updateSliderPosition);
+  </script>------------->
+  
+  <!-- === Swiper JS === -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const modalOverlay = document.getElementById("modal-overlay");
+      const closeModal = document.getElementById("close-modal");
+      const theoryLink = document.getElementById("theory-link");
+      const practiceLink = document.getElementById("practice-link");
+
+      document.querySelectorAll(".wc-slide-item").forEach(item => {
+        item.addEventListener("click", () => {
+          const topic = item.getAttribute("data-topic");
+          const theoryUrl = item.getAttribute("data-theory-link");
+          const practiceUrl = item.getAttribute("data-practice-link");
+
+          // Actualiza el título del modal y los enlaces personalizados
+          document.getElementById("modal-title").textContent = `Opciones para ${topic}`;
+          theoryLink.href = theoryUrl;
+          practiceLink.href = practiceUrl;
+
+          // Muestra el modal
+          modalOverlay.classList.add("show");
+        });
+      });
+
+      closeModal.addEventListener("click", () => {
+        modalOverlay.classList.remove("show");
+      });
+
+      modalOverlay.addEventListener("click", (e) => {
+        if (e.target === modalOverlay) {
+          modalOverlay.classList.remove("show");
+        }
+      });
+    });
+
+  </script>
+
+  
+</body>
+
+</html>
