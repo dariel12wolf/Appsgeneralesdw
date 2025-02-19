@@ -1,0 +1,130 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Header Style */
+.header {
+    display: flex;
+    text-align: left;
+    padding: 5px 1px;
+    background-color: rgb(0, 106, 255);
+    color: #fff;
+    align-items: flex-start;
+}
+
+.back-icon {
+    font-size: 1.5em;
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+/* Dropdown Container */
+.dropdown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    transition: 0.9s all ease;
+}
+
+/* Dropdown Base Style */
+.dropdown {
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.8s ease, box-shadow 0.8s ease;
+}
+
+.dropdown-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.icono {
+    width: 35px;
+    height: 35px;
+    background-color: aliceblue;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+/* Arrow style */
+.arrow {
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+}
+
+/* Rotated Arrow */
+.rotate-arrow {
+    transform: rotate(90deg);
+}
+
+/* Dropdown Content Style */
+/* Agregar transición a dropdown-content */
+.dropdown-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+
+}
+
+
+.dropdown-content a {
+    color: #333;
+    text-decoration: none;
+    padding: 8px;
+}
+.dropdown-content img{
+    width: 12px; 
+    background-color: #333;
+    border-radius: 10px;
+}
+
+.dropdown.open .dropdown-content {
+    height: auto;
+    padding: 10px;
+}
+
+/* Alternating Colors for Every Two Sections */
+.dropdown:nth-child(2n-1),
+.dropdown:nth-child(2n) {
+    background-color: #2478ff;
+    /* Blue */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .dropdown-container {
+        padding: 10px;
+    }
+
+    .dropdown-btn {
+        font-size: 0.9em;
+    }
+}
