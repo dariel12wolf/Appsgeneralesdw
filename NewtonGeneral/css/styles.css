@@ -55,7 +55,7 @@ body {
 
 .projetos p {
   font-size: 20px;
-  font-weight: 900;
+  font-weight: bold;
   color: rgb(0, 73, 198);
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   border-bottom: 3px solid rgb(0, 73, 198);
