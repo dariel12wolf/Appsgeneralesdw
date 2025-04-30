@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página con Opciones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #f3f4f6;
+            color: #111827;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .grid-container {
+            display: grid;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .option-button {
+            background: #ffffff;
+            border: none;
+            border-radius: 1rem;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .option-button:hover {
+            transform: scale(1.03);
+        }
+
+        .option-button img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .info-section {
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 800px;
+            background: #ffffff;
+            border-radius: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .info-content {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .info-content {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        .info-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 1rem;
+        }
+
+        .info-text {
+            flex: 1;
+        }
+
+        .info-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .info-desc {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .info-button {
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .modal {
+            top: 0;
+            display: none;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+
+
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+        }
+
+        .modal a {
+            display: block;
+            margin: 0.5rem 0;
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        .modal-close {
+            margin-top: 1rem;
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-container">
+        <button class="option-button" onclick="showInfo(0)"><img src="img/a.png" alt="Opción 1"></button>
+        <button class="option-button" onclick="showInfo(1)"><img src="img/b.png" alt="Opción 2"></button>
+        <button class="option-button" onclick="showInfo(2)"><img src="img/c.png" alt="Opción 3"></button>
+        <button class="option-button" onclick="showInfo(3)"><img src="img/d.png" alt="Opción 4"></button>
+    </div>
+
+    <div class="info-section" id="infoSection" style="display: none;">
+        <div class="info-content">
+            <div class="info-text">
+                <div class="info-title" id="infoTitle"></div>
+                <div class="info-desc" id="infoDesc"></div>
+                <button class="info-button" id="infoButton" onclick="openModal()">Ver más</button>
+            </div>
+            <img src="" alt="Imagen info" class="info-img" id="infoImage">
+        </div>
+    </div>
+
+    <!-- Modal por cada opción -->
+    <div class="modal" id="popupModal0">
+        <div class="modal-content">
+            <h3>Opción 1</h3>
+            <a href="#">Examen A1</a>
+            <a href="#">Examen A2</a>
+            <a href="#">Examen A3</a>
+            <a href="#">Examen A4</a>
+            <a href="#">Examen A5</a>
+            <button class="modal-close" onclick="closeModal(0)">Cerrar</button>
+        </div>
+    </div>
+
+    <div class="modal" id="popupModal1">
+        <div class="modal-content">
+            <h3>Opción 2</h3>
+            <a href="#">Material B1</a>
+            <a href="#">Material B2</a>
+            <a href="#">Material B3</a>
+            <button class="modal-close" onclick="closeModal(1)">Cerrar</button>
+        </div>
+    </div>
+
+    <div class="modal" id="popupModal2">
+        <div class="modal-content">
+            <h3>Opción 3</h3>
+            <a href="#">Recurso C1</a>
+            <a href="#">Recurso C2</a>
+            <a href="#">Recurso C3</a>
+            <a href="#">Recurso C4</a>
+            <button class="modal-close" onclick="closeModal(2)">Cerrar</button>
+        </div>
+    </div>
+
+    <div class="modal" id="popupModal3">
+        <div class="modal-content">
+            <h3>Opción 4</h3>
+            <a href="#">Guía D1</a>
+            <a href="#">Guía D2</a>
+            <button class="modal-close" onclick="closeModal(3)">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            {
+                title: 'UNJFSC - BLOQUE A',
+                description: 'Exámenes de admisión orientados a postulantes de carreras de ingeniería.',
+                image: 'img/2.webp',
+                buttonText: 'CONTINUAR'
+            },
+            {
+                title: 'UNJFSC - BLOQUE B',
+                description: 'Exámenes de admisión para carreras de salud como medicina, enfermería, bromatología, entre otras.',
+                image: 'img/1.webp',
+                buttonText: 'CONTINUAR'
+            },
+            {
+                title: 'UNJFSC - BLOQUE C',
+                description: 'Exámenes dirigidos a carreras de ciencias sociales como educación, trabajo social, sociología y afines.',
+                image: 'img/3.webp',
+                buttonText: 'CONTINUAR'
+            },
+            {
+                title: 'UNJFSC - BLOQUE D',
+                description: 'Exámenes para carreras de gestión como administración, hotelería y turismo, contabilidad, entre otras.',
+                image: 'img/4.webp',
+                buttonText: 'CONTINUAR'
+            }
+        ];
+
+        let currentIndex = 0;
+
+        function showInfo(index) {
+            currentIndex = index;
+            const info = data[index];
+            document.getElementById('infoTitle').textContent = '';
+            document.getElementById('infoDesc').textContent = '';
+            document.getElementById('infoImage').src = info.image;
+            document.getElementById('infoButton').textContent = info.buttonText;
+            document.getElementById('infoSection').style.display = 'block';
+            typeText(info.title, 'infoTitle');
+            typeText(info.description, 'infoDesc');
+        }
+
+        function typeText(text, elementId) {
+            let i = 0;
+            const el = document.getElementById(elementId);
+            el.textContent = '';
+            const interval = setInterval(() => {
+                el.textContent += text.charAt(i);
+                i++;
+                if (i >= text.length) clearInterval(interval);
+            }, 40);
+        }
+
+        function openModal() {
+            const modalId = 'popupModal' + currentIndex;
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(index) {
+            const modalId = 'popupModal' + index;
+            document.getElementById(modalId).style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
