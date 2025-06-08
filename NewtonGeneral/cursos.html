@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plataforma de Cursos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e293b',
+            accent: '#3b82f6',
+            soft: '#f1f5f9',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #f0f4f8, #e0f2fe);
+    }
+    #sidebar {
+      background: linear-gradient(to bottom right, #ffffff, #f1f5f9);
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+    }
+    #hamburger {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+    }
+    select {
+      background-color: #f8fafc;
+      border: 1px solid #cbd5e1;
+    }
+    iframe {
+      border: none;
+    }
+    button {
+      transition: all 0.2s ease-in-out;
+    }
+    button:hover {
+      transform: scale(1.03);
+    }
+    .tema-activo {
+      font-weight: bold;
+      color: #1e40af;
+    }
+    .modal {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+    background-color: #ffffff;
+    max-width: 500px;
+    margin: auto;
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  /* NUEVO: Scroll en menú lateral */
+  #temas-lista {
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+  }
+
+    
+  </style>
+</head>
+<body class="bg-soft">
+  <div class="flex h-screen overflow-hidden">
+    <aside class="w-64 p-4 fixed top-0 right-0 h-full z-50 transform translate-x-full transition-transform duration-300 ease-in-out md:translate-x-0 md:right-auto md:left-0" id="sidebar">
+      <h2 class="text-xl font-bold mb-4">Temas del Curso</h2>
+      <ul id="temas-lista" class="space-y-2">
+        </ul>
+    </aside>
+
+    <main class="flex-1 overflow-auto p-4 w-full md:ml-64">
+      <div class="mb-4">
+        <label for="curso-select" class="block text-lg font-semibold mb-2">Selecciona un curso:</label>
+        <select id="curso-select" class="w-full p-2 border rounded">
+          <option value="">-- Selecciona --</option>
+          <option value="algebra">Álgebra</option>
+          <option value="aritmetica">Aritmética</option>
+          <option value="geometria">Geometría</option>
+          <option value="trigonometria">Trigonometría</option>
+          <option value="estadistica">Estadística</option>
+          <option value="anatomia">Anatomía</option>
+          <option value="biologia">Biología</option>
+          <option value="literatura">Literatura</option>
+          <option value="lenguaje">Lenguaje</option>
+          <option value="economia">Economía</option>
+          <option value="psicologia">Psicología</option>
+          <option value="filosofia">Filosofía</option>
+        </select>
+      </div>
+
+      <div id="contenido" class="hidden">
+        <h2 id="titulo-tema" class="text-2xl font-bold mb-4 text-center text-primary"></h2>
+        <div class="flex flex-col lg:flex-row lg:space-x-4">
+          <div class="lg:w-2/3">
+            <div class="aspect-video mb-4">
+              <iframe id="video-frame" class="w-full h-full rounded shadow-md" src="" allowfullscreen></iframe>
+            </div>
+            <div class="flex justify-between items-center mb-4 gap-2">
+              <button id="prev-btn" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded">Lección anterior</button>
+              <button id="practica-btn" class="bg-green-500 text-white hover:bg-green-600 px-4 py-2 rounded">Práctica</button>
+              <button id="next-btn" class="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded">Siguiente lección</button>
+            </div>
+          </div>
+          <div class="lg:w-1/3">
+            <h3 class="text-lg font-semibold mb-2">Material complementario (PDF)</h3>
+            <iframe id="pdf-frame" class="w-full h-64 lg:h-[calc(100%-2rem)] rounded shadow-md" src=""></iframe>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <button id="hamburger" class="fixed top-4 right-4 md:hidden z-50 p-2 rounded">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <div id="modal" class="hidden fixed inset-0 flex items-center justify-center modal z-50">
+    <div class="modal-content">
+      <h3 class="text-xl font-bold mb-4">Prácticas del tema</h3>
+      <ul id="lista-practicas" class="space-y-2 text-blue-600 underline">
+        </ul>
+      <button onclick="cerrarModal()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Cerrar</button>
+    </div>
+  </div>
+  
+
+  <script>
+    const contenido = document.getElementById('contenido');
+    const videoFrame = document.getElementById('video-frame');
+    const pdfFrame = document.getElementById('pdf-frame');
+    const tituloTema = document.getElementById('titulo-tema');
+    const practicaBtn = document.getElementById('practica-btn');
+    const sidebar = document.getElementById('sidebar');
+    const hamburger = document.getElementById('hamburger');
+    const modal = document.getElementById('modal');
+    const cursoSelect = document.getElementById('curso-select');
+    const temasLista = document.getElementById('temas-lista');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const listaPracticas = document.getElementById('lista-practicas');
+
+    let cursosData = {
+      algebra: [
+        { title: 'Teoria de Exponentes', video: 'https://www.youtube.com/embed/QTOF9_9LZSs?si=gwsP_gNTxXUs0xKM', pdf: '', practicaId: 'algebra-1' },
+        { title: 'Polinomios', video: 'https://www.youtube.com/embed/tnf_wQ7-_Pw?si=K0RIw_ykte6GlU4i', pdf: '', practicaId: 'algebra-2' },
+        { title: 'Productos Notables', video: 'https://www.youtube.com/embed/G-ym95yl3Es?si=KFhxUXzbSZDOqsFH', pdf: '', practicaId: 'algebra-3' },
+        { title: 'División de polinomios', video: 'https://www.youtube.com/embed/6', pdf: '', practicaId: 'algebra-2' },
+        { title: 'Cocientes Notables', video: 'https://www.youtube.com/embed/6', pdf: '', practicaId: 'algebra-2' },
+        { title: 'Factorización', video: 'https://www.youtube.com/embed/6', pdf: '', practicaId: 'algebra-2' },
+      ],
+      aritmetica: [
+        { title: 'Lógica proposicional', video: 'https://www.youtube.com/embed/8', pdf: '', practicaId: 'aritmetica-1' },
+        { title: 'Teoría de conjuntos', video: 'https://www.youtube.com/embed/9', pdf: '', practicaId: 'aritmetica-2' },
+      ],
+      geometria: [
+        { title: 'Segmentos - Ángulos', video: 'https://www.youtube.com/embed/8', pdf: '', practicaId: 'aritmetica-1' },
+        { title: 'Triángulos', video: 'https://www.youtube.com/embed/9', pdf: '', practicaId: 'aritmetica-2' },
+      ],
+      trigonometria: [
+        { title: 'Sistema de medida angular - Sector circular', video: 'https://www.youtube.com/embed/8', pdf: '', practicaId: 'aritmetica-1' },
+        { title: 'Razones trigonométricas de ángulos agudos', video: 'https://www.youtube.com/embed/9', pdf: '', practicaId: 'aritmetica-2' },
+      ],
+      estadistica: [
+        { title: 'Tablas de distribución - I', video: 'https://www.youtube.com/embed/BGrB4raG2rA?si=VLqsBtggYU_IuVud', pdf: '', practicaId: 'aritmetica-1' },
+        { title: 'Tablas de distribución - II', video: 'https://www.youtube.com/embed/9', pdf: '', practicaId: 'aritmetica-2' },
+      ],
+      anatomia: [
+        { title: 'Tejido epitelial', video: 'https://www.youtube.com/embed/10', pdf: '', practicaId: 'anatomia-1' },
+        { title: 'Tejido cartilaginoso - Tejido óseo', video: 'https://www.youtube.com/embed/11', pdf: 'https://www.w3', practicaId: 'anatomia-2' },
+      ],
+      // Agrega más cursos y temas aquí
+    };
+
+    let practicasData = {
+      'algebra-1': [{ text: 'Examen 1 de Álgebra Básica', link: 'go:ALB1' }, { text: 'Quiz de Ecuaciones', link: 'go:QUIZ_ECUACIONES' }],
+      'algebra-2': [{ text: 'Examen 2 de Factorización', link: 'go:ALB2' }],
+      'algebra-3': [{ text: 'Examen 3 de Productos Notables', link: 'go:ALB3' }],
+      'aritmetica-1': [{ text: 'Test 1 de Suma y Resta', link: 'go:ARI1' }],
+      'anatomia-1': [{ text: 'Quiz de huesos', link: 'go:ANA1' }],
+      // Agrega más prácticas según tus practicaId
+    };
+
+    let currentCourseTemas = [];
+    let currentTemaIndex = -1;
+
+    function mostrarTema(index) {
+      if (index >= 0 && index < currentCourseTemas.length) {
+        currentTemaIndex = index;
+        const tema = currentCourseTemas[index];
+
+        tituloTema.textContent = tema.title;
+        videoFrame.src = tema.video;
+        pdfFrame.src = tema.pdf;
+        practicaBtn.setAttribute('data-practica', tema.practicaId);
+        contenido.classList.remove('hidden');
+
+        // Actualizar la clase activa en el menú lateral
+        const temaItems = temasLista.querySelectorAll('li');
+        temaItems.forEach((item, i) => {
+          if (i === index) {
+            item.classList.add('tema-activo');
+          } else {
+            item.classList.remove('tema-activo');
+          }
+        });
+
+        // Habilitar/deshabilitar botones de navegación
+        prevBtn.disabled = currentTemaIndex === 0;
+        nextBtn.disabled = currentTemaIndex === currentCourseTemas.length - 1;
+
+        // Ocultar sidebar en móviles después de seleccionar tema
+        if (window.innerWidth < 768) {
+          sidebar.classList.add('translate-x-full');
+        }
+      }
+    }
+
+    function cargarTemasDelCurso(courseId) {
+      temasLista.innerHTML = ''; // Limpiar temas anteriores
+      currentCourseTemas = cursosData[courseId] || [];
+      currentTemaIndex = -1; // Resetear índice de tema
+
+      if (currentCourseTemas.length > 0) {
+        currentCourseTemas.forEach((tema, index) => {
+          const li = document.createElement('li');
+          li.classList.add('cursor-pointer', 'text-blue-600', 'hover:underline');
+          li.textContent = tema.title;
+          li.onclick = () => mostrarTema(index);
+          temasLista.appendChild(li);
+        });
+        mostrarTema(0); // Mostrar el primer tema del curso seleccionado
+
+        // *************** NUEVO: Activar el menú de hamburguesa al seleccionar un curso ***************
+        // Solo para pantallas pequeñas
+        if (window.innerWidth < 768) {
+          sidebar.classList.remove('translate-x-full'); // Mostrar el sidebar
+        }
+        // ******************************************************************************************
+
+      } else {
+        contenido.classList.add('hidden'); // Ocultar contenido si no hay temas
+        if (window.innerWidth < 768) {
+          sidebar.classList.add('translate-x-full'); // Ocultar el sidebar si no hay temas
+        }
+      }
+    }
+
+    cursoSelect.addEventListener('change', (event) => {
+      const selectedCourse = event.target.value;
+      if (selectedCourse) {
+        cargarTemasDelCurso(selectedCourse);
+      } else {
+        temasLista.innerHTML = '';
+        contenido.classList.add('hidden');
+        // Asegurarse de que el sidebar esté oculto si no hay curso seleccionado
+        if (window.innerWidth < 768) {
+          sidebar.classList.add('translate-x-full');
+        }
+      }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (currentTemaIndex > 0) {
+        mostrarTema(currentTemaIndex - 1);
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentTemaIndex < currentCourseTemas.length - 1) {
+        mostrarTema(currentTemaIndex + 1);
+      }
+    });
+
+    practicaBtn.addEventListener('click', () => {
+      const id = practicaBtn.getAttribute('data-practica');
+      listaPracticas.innerHTML = ''; // Limpiar prácticas anteriores
+
+      const practicas = practicasData[id] || [];
+      if (practicas.length > 0) {
+        practicas.forEach(p => {
+          const li = document.createElement('li');
+          li.classList.add('practica');
+          const a = document.createElement('a');
+          a.href = p.link;
+          a.target = '_blank';
+          a.textContent = p.text;
+          li.appendChild(a);
+          listaPracticas.appendChild(li);
+        });
+      } else {
+        const li = document.createElement('li');
+        li.textContent = 'No hay prácticas disponibles para este tema.';
+        listaPracticas.appendChild(li);
+      }
+      modal.classList.remove('hidden');
+    });
+
+    function cerrarModal() {
+      modal.classList.add('hidden');
+    }
+
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('translate-x-full');
+    });
+
+    // Cierra el sidebar si se hace clic fuera de él en dispositivos móviles
+    document.addEventListener('click', (event) => {
+      if (window.innerWidth < 768 && !sidebar.contains(event.target) && !hamburger.contains(event.target) && !sidebar.classList.contains('translate-x-full')) {
+        sidebar.classList.add('translate-x-full');
+      }
+    });
+  </script>
+</body>
+</html>
