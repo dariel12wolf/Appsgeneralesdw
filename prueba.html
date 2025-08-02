@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>WBNS World Maker - Menú Principal</title>
+
+  <!-- Google Fonts: Press Start 2P y Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Montserrat:wght@600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* Colores inspirados en personajes: Naranja-Rojo (Aquino), Violeta (Locochón), Azul (Duxo), Verde Lima (Cejo) */
+    :root {
+      --color-aquino: #e05e31;
+      --color-locochon: #7e39f9;
+      --color-duxo: #3d79ff;
+      --color-cejo: #75ff7f;
+
+      --bg-gradient-start: #1b0f3c;
+      --bg-gradient-mid: #2e1c66;
+      --bg-gradient-end: #1b0f3c;
+
+      --font-arcade: 'Press Start 2P', cursive;
+      --font-modern: 'Montserrat', sans-serif;
+
+      --menu-bg: rgba(255 255 255 / 0.1);
+      --menu-bg-hover: rgba(255 255 255 / 0.15);
+      --menu-border: rgba(255 255 255 / 0.25);
+
+      --btn-text-shadow: 0 0 3px rgba(0,0,0,0.5);
+      --btn-shadow-hover: 0 0 13px rgba(255,255,255,0.8);
+    }
+
+    /* Base */
+    html, body {
+      margin: 0; padding: 0;
+      width: 100vw; height: 100dvh;
+      overflow-x: hidden;
+      font-family: var(--font-modern);
+      background: linear-gradient(90deg, var(--bg-gradient-start), var(--bg-gradient-mid), var(--bg-gradient-end));
+      background-size: 400% 400%;
+      animation: bgAnimation 45s ease-in-out infinite;
+      color: white;
+      user-select: none;
+    }
+    @keyframes bgAnimation {
+      0%,100%{background-position:0% 50%;}
+      50% {background-position:100% 50%;}
+    }
+
+    /* Contenedor inicial con título y botón */
+    #initScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      z-index: 10;
+      background: transparent;
+      transition: opacity 0.6s ease;
+    }
+    #initScreen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Título grande */
+    #gameTitle {
+      font-family: var(--font-arcade);
+      font-weight: 400;
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      background: linear-gradient(90deg, var(--color-aquino), var(--color-duxo), var(--color-locochon), var(--color-cejo));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(255 255 255 / 0.35);
+      user-select: none;
+      transition: all 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+    /* Estado título final (reducido y colocado en menú lateral) */
+    #gameTitle.shrink {
+      position: fixed;
+      top: 1.3rem;
+      left: 1.5rem;
+      font-size: clamp(1.1rem, 2.8vw, 2rem);
+      z-index: 40;
+      text-shadow: 0 0 6px rgba(255 255 255 / 0.75);
+      pointer-events: none;
+    }
+
+    /* Botón JUGAR */
+    #playBtn {
+      cursor: pointer;
+      font-family: var(--font-modern);
+      font-weight: 700;
+      font-size: clamp(1.1rem, 3vw, 1.6rem);
+      padding: 1rem 4rem;
+      border-radius: 24px;
+      border: none;
+      background: linear-gradient(90deg, var(--color-cejo), var(--color-locochon));
+      color: #121212;
+      box-shadow:
+        0 0 18px var(--color-cejo),
+        0 0 45px var(--color-locochon);
+      text-shadow: var(--btn-text-shadow);
+      user-select: none;
+      transition: all 0.5s ease;
+      outline-offset: 3px;
+    }
+    #playBtn:hover, #playBtn:focus {
+      background: linear-gradient(90deg, var(--color-aquino), var(--color-duxo));
+      color: white;
+      box-shadow:
+        var(--btn-shadow-hover),
+        0 0 30px var(--color-duxo);
+      outline-offset: 6px;
+      transform: scale(1.05);
+    }
+    #playBtn.vanish {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-40px) scale(0.72);
+      transition: all 0.6s cubic-bezier(0.35, 0, 0.35, 1);
+    }
+
+    /* Menú lateral */
+    #sidebarMenu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100dvh;
+      width: clamp(280px, 20vw, 320px);
+      background: var(--menu-bg);
+      box-shadow: inset 1px 0 15px rgba(255 255 255 / 0.1);
+      border-right: 1.5px solid var(--menu-border);
+      display: flex;
+      flex-direction: column;
+      padding: 4rem 2rem 2rem 2rem;
+      gap: 1.8rem;
+      opacity: 0;
+      transform: translateX(-120%);
+      transition: all 0.6s cubic-bezier(0.35, 0, 0.35, 1);
+      z-index: 30;
+      pointer-events: none;
+    }
+    #sidebarMenu.visible {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    /* Título dentro menú lateral */
+    #sidebarTitle {
+      font-family: var(--font-arcade);
+      font-weight: 400;
+      font-size: clamp(1rem, 2.5vw, 1.7rem);
+      background: linear-gradient(90deg, var(--color-aquino), var(--color-duxo), var(--color-locochon), var(--color-cejo));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 12px rgba(255 255 255 / 0.4);
+      user-select: none;
+      margin-bottom: 2rem;
+    }
+
+    /* Botones del menú */
+    .menuButton {
+      font-family: var(--font-modern);
+      font-weight: 700;
+      font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+      padding: 0.8rem 1.8rem;
+      border-radius: 15px;
+      border: none;
+      background: var(--menu-bg);
+      color: white;
+      text-align: left;
+      cursor: pointer;
+      box-shadow:
+        0 0 0 transparent;
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      position: relative;
+      user-select: none;
+    }
+    .menuButton:hover, .menuButton:focus {
+      background: var(--menu-bg-hover);
+      box-shadow:
+        0 0 16px var(--color-locochon);
+      outline: none;
+      transform: translateX(6px);
+    }
+    .menuButton:active {
+      transform: translateX(2px);
+    }
+
+    /* Submenú AVENTURA */
+    #submenuAventura {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.5s cubic-bezier(0.68, 0, 0.265, 1);
+      border-left: 2.5px solid var(--color-duxo);
+      margin-left: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      user-select: none;
+    }
+    #submenuAventura.open {
+      max-height: 120px; /* suficiente para 2 botones */
+    }
+    .subButton {
+      font-family: var(--font-modern);
+      font-weight: 600;
+      font-size: clamp(0.8rem, 2vw, 1.1rem);
+      padding: 0.45rem 1.4rem;
+      margin-left: 14px;
+      background: var(--menu-bg-hover);
+      border-radius: 15px;
+      border: none;
+      color: var(--color-duxo);
+      text-align: left;
+      cursor: pointer;
+      box-shadow:
+        0 0 9px rgba(65 255 0 / 0.45);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .subButton:hover, .subButton:focus {
+      background: var(--color-duxo);
+      color: #121212;
+      outline: none;
+    }
+
+    /* Contenedor derecho para siluetas */
+    #rightPanel {
+      position: fixed;
+      right: 2rem;
+      top: 10vh;
+      width: 200px;
+      max-height: 80dvh;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-row-gap: 2.2rem;
+      align-content: start;
+      z-index: 20;
+      user-select: none;
+    }
+
+    /* Siluetas de personajes */
+    .silhouette {
+      position: relative;
+      width: 160px;
+      height: 200px;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      border-radius: 16px;
+      box-shadow:
+        0 0 8px #000a inset,
+        0 8px 16px rgba(0,0,0,0.8);
+      cursor: pointer;
+
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+
+      opacity: 0;
+      transform: scale(0.75);
+      animation-fill-mode: forwards;
+      transition: box-shadow 0.35s ease, filter 0.35s ease;
+    }
+    /* Entrada secuencial (fade + scale) */
+    .silhouette.show {
+      animation: silhouetteEnter 0.46s ease forwards;
+    }
+    @keyframes silhouetteEnter {
+      from {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Nombre de personaje */
+    .silhouetteName {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-arcade);
+      color: white;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      user-select: none;
+      padding: 0.2rem 0.6rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--color-aquino), var(--color-duxo), var(--color-locochon), var(--color-cejo));
+      box-shadow:
+        0 0 10px rgba(255 255 255 / 0.8);
+      transition: all 0.45s ease;
+      pointer-events: none;
+    }
+
+    /* Estado bloqueado siluetas */
+    .silhouette.locked {
+      filter: brightness(0.3) saturate(0.7);
+    }
+    .silhouette.locked:hover, 
+    .silhouette.locked:focus {
+      filter: brightness(0.55) saturate(1.1);
+      box-shadow:
+        0 0 20px var(--color-duxo),
+        inset 0 0 15px var(--color-aquino);
+      outline: none;
+    }
+    .silhouette.locked .silhouetteName {
+      color: var(--color-duxo);
+      font-style: italic;
+      opacity: 0.72;
+      text-shadow:
+        0 0 6px var(--color-duxo);
+    }
+
+    /* Estado desbloqueado */
+    .silhouette.unlocked {
+      filter: brightness(1.1) saturate(1.25);
+      box-shadow:
+        0 0 30px var(--color-cejo),
+        0 0 35px var(--color-locochon);
+      outline: none;
+    }
+    .silhouette.unlocked:hover,
+    .silhouette.unlocked:focus {
+      animation: unlockGlowPulse 1.5s ease infinite alternate;
+      cursor: pointer;
+      outline: none;
+    }
+    .silhouette.unlocked .silhouetteName {
+      opacity: 1;
+      color: var(--color-cejo);
+      font-weight: 700;
+      text-shadow:
+        0 0 14px var(--color-cejo),
+        0 0 20px var(--color-locochon);
+    }
+
+    @keyframes unlockGlowPulse {
+      0% {
+        transform: scale(1) translateY(0);
+        box-shadow:
+          0 0 30px var(--color-cejo),
+          0 0 25px var(--color-locochon);
+        filter: brightness(1);
+      }
+      100% {
+        transform: scale(1.08) translateY(-6px);
+        filter: brightness(1.2);
+        box-shadow:
+          0 0 45px var(--color-cejo),
+          0 0 40px var(--color-locochon);
+      }
+    }
+
+    /* Foco accesible */
+    .menuButton:focus,
+    .subButton:focus,
+    .silhouette:focus {
+      outline: 3px solid var(--color-duxo);
+      outline-offset: 2px;
+    }
+
+    /* Responsive: en móvil simplificar disposición */
+    @media (max-aspect-ratio: 16/9), (max-width: 900px) {
+      #rightPanel {
+        position: fixed;
+        top: auto;
+        bottom: 3rem;
+        right: 50%;
+        transform: translateX(50%);
+        max-height: none;
+        width: 90vw;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1rem;
+        background: rgba(0,0,0,0.3);
+        padding: 0.5rem 1rem;
+        border-radius: 16px;
+      }
+      .silhouette {
+        width: 60px;
+        height: 80px;
+      }
+      #sidebarMenu {
+        width: 80vw;
+        height: auto;
+        bottom: 0;
+        top: auto;
+        border-radius: 0;
+        padding: 1rem 1rem 1.5rem 1rem;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        box-shadow: none;
+        border-right: none;
+        background: var(--menu-bg-hover);
+      }
+      #sidebarMenu.visible {
+        transform: translateX(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+      #sidebarTitle {
+        display: none;
+      }
+      #gameTitle.shrink {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Pantalla inicial título + botón -->
+  <section id="initScreen" aria-label="Pantalla inicial WBNS World Maker">
+    <h1 id="gameTitle" tabindex="0" aria-live="polite">WBNS World Maker</h1>
+    <button id="playBtn" aria-label="Empezar juego">JUGAR</button>
+  </section>
+
+  <!-- Menú lateral izquierdo -->
+  <aside id="sidebarMenu" aria-label="Menú principal" hidden>
+    <div id="sidebarTitle" aria-live="polite">WBNS World Maker</div>
+
+    <button class="menuButton" id="aventuraBtn" aria-expanded="false" aria-haspopup="true" aria-controls="submenuAventura">AVENTURA ▾</button>
+    <div id="submenuAventura" role="menu" hidden>
+      <button class="subButton" role="menuitem" tabindex="-1">Online</button>
+      <button class="subButton" role="menuitem" tabindex="-1">Local</button>
+    </div>
+
+    <button class="menuButton" id="makerBtn">MAKER</button>
+    <button class="menuButton" id="tiendaBtn">TIENDA</button>
+    <button class="menuButton" id="configBtn">CONFIGURACIÓN</button>
+    <button class="menuButton" id="salirBtn">SALIR</button>
+  </aside>
+
+  <!-- Panel de siluetas a la derecha -->
+  <section id="rightPanel" aria-label="Personajes desbloqueables">
+    <div class="silhouette locked" tabindex="0">
+      <div class="silhouetteName">AQUINO</div>
+    </div>
+    <div class="silhouette locked" tabindex="0">
+      <div class="silhouetteName">DUXO</div>
+    </div>
+    <div class="silhouette locked" tabindex="0">
+      <div class="silhouetteName">LOCOCHÓN</div>
+    </div>
+    <div class="silhouette locked" tabindex="0">
+      <div class="silhouetteName">CEJO</div>
+    </div>
+  </section>
+
+<script>
+  // Variables para estado
+  const initScreen = document.getElementById('initScreen');
+  const playBtn = document.getElementById('playBtn');
+  const gameTitle = document.getElementById('gameTitle');
+  const sidebar = document.getElementById('sidebarMenu');
+  const sidebarTitle = document.getElementById('sidebarTitle');
+  const aventuraBtn = document.getElementById('aventuraBtn');
+  const submenuAventura = document.getElementById('submenuAventura');
+
+  const silhouettes = [...document.querySelectorAll('#rightPanel .silhouette')];
+  // Simular algunos personajes desbloqueados (ejemplo: DUXO y CEJO desbloqueados)
+  const unlockStates = [false, true, false, true];
+
+  // Animación de siluetas entrada secuencial
+  function showSilhouettes() {
+    silhouettes.forEach((el, idx) => {
+      setTimeout(() => {
+        el.classList.add('show');
+        // aplicar estado desbloqueado o bloqueado
+        if(unlockStates[idx]) {
+          el.classList.remove('locked');
+          el.classList.add('unlocked');
+        } else {
+          el.classList.remove('unlocked');
+          el.classList.add('locked');
+        }
+      }, idx * 300);
+    });
+  }
+
+  // Cambia nombre encima/abajo siluetas cuando hover o focus o toque
+  silhouettes.forEach((el, i) => {
+    el.addEventListener('mouseenter', () => {
+      if(unlockStates[i]) {
+        el.querySelector('.silhouetteName').textContent = ['AQUINO', 'DUXO', 'LOCOCHÓN', 'CEJO'][i];
+        el.classList.add('unlocked');
+      } else {
+        el.querySelector('.silhouetteName').textContent = '??? — Completa el juego al 100% para desbloquear';
+        el.classList.remove('unlocked');
+      }
+    });
+    el.addEventListener('mouseleave', () => {
+      el.querySelector('.silhouetteName').textContent = ['AQUINO', 'DUXO', 'LOCOCHÓN', 'CEJO'][i];
+      if(unlockStates[i]) {
+        el.classList.add('unlocked');
+      } else {
+        el.classList.remove('unlocked');
+      }
+    });
+    el.addEventListener('touchstart', (ev) => {
+      ev.preventDefault();
+      if(unlockStates[i]) {
+        el.querySelector('.silhouetteName').textContent = ['AQUINO', 'DUXO', 'LOCOCHÓN', 'CEJO'][i];
+        el.classList.add('unlocked');
+      } else {
+        el.querySelector('.silhouetteName').textContent = '??? — Completa el juego al 100% para desbloquear';
+        el.classList.remove('unlocked');
+      }
+    }, {passive: false});
+  });
+
+  // Función para animar entrada del menú lateral con opciones
+  function animateMenuButtons() {
+    const buttons = [...sidebar.querySelectorAll('.menuButton')].concat([...submenuAventura.querySelectorAll('.subButton')]);
+    buttons.forEach((btn, i) => {
+      btn.style.opacity = '0';
+      btn.style.transform = 'translateX(-30px)';
+      setTimeout(() => {
+        btn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        btn.style.opacity = '1';
+        btn.style.transform = 'translateX(0)';
+      }, i * 120 + 150);
+    });
+  }
+
+  // Manejo desplegable AVENTURA
+  aventuraBtn.addEventListener('click', () => {
+    const isOpen = aventuraBtn.getAttribute('aria-expanded') === 'true';
+    if(isOpen) {
+      submenuAventura.hidden = true;
+      aventuraBtn.setAttribute('aria-expanded', 'false');
+    } else {
+      submenuAventura.hidden = false;
+      aventuraBtn.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  // Subopciones de aventura alerta sencilla
+  submenuAventura.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      alert(`Seleccionaste: AVENTURA > ${btn.textContent}`);
+    });
+  });
+
+  // Otros botones - alert simple
+  sidebar.querySelectorAll('.menuButton:not(#aventuraBtn)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if(btn.id === 'salirBtn') {
+        alert('Gracias por jugar WBNS World Maker!');
+      } else {
+        alert(`Seleccionaste: ${btn.textContent}`);
+      }
+    });
+  });
+
+  // Evento click en JUGAR para animar transición y mostrar menú
+  playBtn.addEventListener('click', () => {
+    // animación de desaparición botón
+    playBtn.classList.add('vanish');
+    // después de animación
+    setTimeout(() => {
+      // ocultar init screen (pero sin quitar título)
+      initScreen.classList.add('hidden');
+      // mostrar menú lateral
+      sidebar.hidden = false;
+      sidebar.classList.add('visible');
+      // colocar título en menú lateral
+      gameTitle.classList.add('shrink');
+      // animar botones menú
+      animateMenuButtons();
+      // mostrar siluetas con animación secuencial
+      showSilhouettes();
+    }, 600);
+  });
+
+</script>
+
+</body>
+</html>
