@@ -106,7 +106,7 @@
             </div>
             <div class="flex justify-between items-center mb-4 gap-2">
               <button id="prev-btn" class="bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded">Lección anterior</button>
-              <button id="practica-btn" class="bg-green-500 text-white hover:bg-green-600 px-4 py-2 rounded">Práctica</button>
+              <button id="Práctica-btn" class="bg-green-500 text-white hover:bg-green-600 px-4 py-2 rounded">Práctica</button>
               <button id="next-btn" class="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded">Siguiente lección</button>
             </div>
           </div>
@@ -128,7 +128,7 @@
   <div id="modal" class="hidden fixed inset-0 flex items-center justify-center modal z-50">
     <div class="modal-content">
       <h3 class="text-xl font-bold mb-4">Prácticas del tema</h3>
-      <ul id="lista-practicas" class="space-y-2 text-blue-600 underline">
+      <ul id="lista-Prácticas" class="space-y-2 text-blue-600 underline">
         </ul>
       <button onclick="cerrarModal()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded">Cerrar</button>
     </div>
@@ -140,7 +140,7 @@
     const videoFrame = document.getElementById('video-frame');
     const pdfFrame = document.getElementById('pdf-frame');
     const tituloTema = document.getElementById('titulo-tema');
-    const practicaBtn = document.getElementById('practica-btn');
+    const PrácticaBtn = document.getElementById('Práctica-btn');
     const sidebar = document.getElementById('sidebar');
     const hamburger = document.getElementById('hamburger');
     const modal = document.getElementById('modal');
@@ -148,54 +148,65 @@
     const temasLista = document.getElementById('temas-lista');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
-    const listaPracticas = document.getElementById('lista-practicas');
+    const listaPrácticas = document.getElementById('lista-Prácticas');
 
     let cursosData = {
       algebra: [
-        { title: 'Teoria de Exponentes', video: 'https://www.youtube.com/embed/QTOF9_9LZSs?si=gwsP_gNTxXUs0xKM', pdf: 'https://drive.google.com/file/d/1KUQHmC8tEt2n9VLNHUUurk-d7EMho6Pz/preview', practicaId: 'algebra-1' },
-        { title: 'Polinomios', video: 'https://www.youtube.com/embed/tnf_wQ7-_Pw?si=K0RIw_ykte6GlU4i', pdf: 'https://drive.google.com/file/d/1VMmjAxqiBliQ5CyTfhQKiX7GBkweNQvF/preview', practicaId: 'algebra-2' },
-        { title: 'Productos Notables', video: 'https://www.youtube.com/embed/G-ym95yl3Es?si=KFhxUXzbSZDOqsFH', pdf: 'https://drive.google.com/file/d/1JPass7rTNxz6sPOexj_DGYHvdAt1CC7Y/preview', practicaId: 'algebra-3' },
-        { title: 'División de polinomios', video: 'https://www.youtube.com/embed/63y_SGwAoV4?si=B3VYnb_x6wpbJ-fO', pdf: 'https://drive.google.com/file/d/1nRy8s_LkKARFv1yT34e47sseKXwKR_B7/preview', practicaId: 'algebra-4' },
-        { title: 'Cocientes Notables', video: 'https://www.youtube.com/embed/Bqm4_wfIOiU?si=SVk8z-gWWBkxN1uX', pdf: 'https://drive.google.com/file/d/1Ts6F0HwWxaNK12Y-DRjRv9am3ORyEJOu/preview', practicaId: 'algebra-5' },
-        { title: 'Factorización', video: 'https://www.youtube.com/embed/-tS50MayXiE?si=5HV9KNcve6YqHy4S', pdf: 'https://drive.google.com/file/d/10Ek_lKF_N0FytANcwNbT8XeZy1d2XRNu/preview', practicaId: 'algebra-6' },
+        { title: 'Teoria de Exponentes', video: 'https://www.youtube.com/embed/QTOF9_9LZSs?si=gwsP_gNTxXUs0xKM', pdf: 'https://drive.google.com/file/d/1KUQHmC8tEt2n9VLNHUUurk-d7EMho6Pz/preview', PrácticaId: 'algebra-1' },
+        { title: 'Polinomios', video: 'https://www.youtube.com/embed/tnf_wQ7-_Pw?si=K0RIw_ykte6GlU4i', pdf: 'https://drive.google.com/file/d/1VMmjAxqiBliQ5CyTfhQKiX7GBkweNQvF/preview', PrácticaId: 'algebra-2' },
+        { title: 'Productos Notables', video: 'https://www.youtube.com/embed/G-ym95yl3Es?si=KFhxUXzbSZDOqsFH', pdf: 'https://drive.google.com/file/d/1JPass7rTNxz6sPOexj_DGYHvdAt1CC7Y/preview', PrácticaId: 'algebra-3' },
+        { title: 'División de polinomios', video: 'https://www.youtube.com/embed/63y_SGwAoV4?si=B3VYnb_x6wpbJ-fO', pdf: 'https://drive.google.com/file/d/1nRy8s_LkKARFv1yT34e47sseKXwKR_B7/preview', PrácticaId: 'algebra-4' },
+        { title: 'Cocientes Notables', video: 'https://www.youtube.com/embed/Bqm4_wfIOiU?si=SVk8z-gWWBkxN1uX', pdf: 'https://drive.google.com/file/d/1Ts6F0HwWxaNK12Y-DRjRv9am3ORyEJOu/preview', PrácticaId: 'algebra-5' },
+        { title: 'Factorización', video: 'https://www.youtube.com/embed/-tS50MayXiE?si=5HV9KNcve6YqHy4S', pdf: 'https://drive.google.com/file/d/10Ek_lKF_N0FytANcwNbT8XeZy1d2XRNu/preview', PrácticaId: 'algebra-6' },
       ],
       aritmetica: [
-        { title: 'Lógica proposicional', video: 'https://www.youtube.com/embed/3I5OJTPyKRY?si=wEkg0MJUOEzgUnmy', pdf: 'https://drive.google.com/file/d/1ixIfBsF0sEH8NPQDi_TRmcPJz-bMfJb1/preview', practicaId: 'aritmetica-1' },
-        { title: 'Teoría de conjuntos', video: 'https://www.youtube.com/embed/PvfmttWrGM0?si=GX22tMz1piJC4ojt', pdf: 'https://drive.google.com/file/d/167p7hqBvuI7B4862b0xg4J-vPeqbHqJW/preview', practicaId: 'aritmetica-2' },
-        { title: 'Numeración', video: 'https://www.youtube.com/embed/WuS487rpc5Q?si=Wj93seUpywS1Q85w', pdf: 'https://drive.google.com/file/d/1a8R0pwGmUGs5IOH8PKCF2B772uulfZLm/preview', practicaId: 'aritmetica-3' },
-        { title: 'Criterios de Divisibilidad', video: 'https://www.youtube.com/embed/vLWiNb8jLgY?si=DmBbxuzpx9Ng36B7', pdf: '', practicaId: 'aritmetica-4' },
+        { title: 'Lógica proposicional', video: 'https://www.youtube.com/embed/3I5OJTPyKRY?si=wEkg0MJUOEzgUnmy', pdf: 'https://drive.google.com/file/d/1ixIfBsF0sEH8NPQDi_TRmcPJz-bMfJb1/preview', PrácticaId: 'aritmetica-1' },
+        { title: 'Teoría de conjuntos', video: 'https://www.youtube.com/embed/PvfmttWrGM0?si=GX22tMz1piJC4ojt', pdf: 'https://drive.google.com/file/d/167p7hqBvuI7B4862b0xg4J-vPeqbHqJW/preview', PrácticaId: 'aritmetica-2' },
+        { title: 'Numeración', video: 'https://www.youtube.com/embed/WuS487rpc5Q?si=Wj93seUpywS1Q85w', pdf: 'https://drive.google.com/file/d/1a8R0pwGmUGs5IOH8PKCF2B772uulfZLm/preview', PrácticaId: 'aritmetica-3' },
+        { title: 'Criterios de Divisibilidad', video: 'https://www.youtube.com/embed/vLWiNb8jLgY?si=DmBbxuzpx9Ng36B7', pdf: '', PrácticaId: 'aritmetica-4' },
       ],
       geometria: [
-        { title: 'Segmentos - Ángulos', video: 'https://www.youtube.com/embed/II89moaL214?si=me6SdzFGNK69JPY2', pdf: 'https://drive.google.com/file/d/1lKGr2HbwUme77Unk9b74AnojV885xXiV/preview', practicaId: 'geometria-1' },
-        { title: 'Triángulos', video: 'https://www.youtube.com/embed/sRD54NtabPM?si=P4vEl2sF-2IRfElL', pdf: '', practicaId: 'geometria-2' },
+        { title: 'Segmentos - Ángulos', video: 'https://www.youtube.com/embed/II89moaL214?si=me6SdzFGNK69JPY2', pdf: 'https://drive.google.com/file/d/1lKGr2HbwUme77Unk9b74AnojV885xXiV/preview', PrácticaId: 'geometria-1' },
+        { title: 'Triángulos', video: 'https://www.youtube.com/embed/sRD54NtabPM?si=P4vEl2sF-2IRfElL', pdf: '', PrácticaId: 'geometria-2' },
+        { title: 'Congruencia de Triángulos', video: 'https://www.youtube.com/embed/8XZGF_ulaJA?si=nz0iPES1axn4lwkZ', pdf: '', PrácticaId: 'geometria-3' },
+        { title: 'Polígonos', video: 'https://www.youtube.com/embed/I9R2QuaebZY?si=9l0RDv9zrqfEMyDO', pdf: '', PrácticaId: 'geometria-4' },
+        { title: 'Cuadriláteros', video: 'https://www.youtube.com/embed/Pj_9JxndsME?si=J81hlXVlJ_EbJGZ0', pdf: '', PrácticaId: 'geometria-5' },
       ],
       trigonometria: [
-        { title: 'Sistema de medida angular - Sector circular', video: 'https://www.youtube.com/embed/lpCYh33U18I?si=8fbvbG9wi24av1cP', pdf: '', practicaId: 'trigonometria-1' },
-        { title: 'Razones trigonométricas de ángulos agudos', video: 'https://www.youtube.com/embed/rj0kkRM-JsM?si=B9BjRetRL-1rKFVW', pdf: '', practicaId: 'trigonometria-2' },
+        { title: 'Sistema de medida angular - Sector circular', video: 'https://www.youtube.com/embed/lpCYh33U18I?si=8fbvbG9wi24av1cP', pdf: '', PrácticaId: 'trigonometria-1' },
+        { title: 'Razones trigonométricas de ángulos agudos', video: 'https://www.youtube.com/embed/rj0kkRM-JsM?si=B9BjRetRL-1rKFVW', pdf: '', PrácticaId: 'trigonometria-2' },
       ],
       estadistica: [
-        { title: 'Tablas de distribución - I', video: 'https://www.youtube.com/embed/BGrB4raG2rA?si=VLqsBtggYU_IuVud', pdf: '', practicaId: 'estadistica-1' },
-        { title: 'Tablas de distribución - II', video: 'https://www.youtube.com/embed/D2cs5rBynkA?si=qUkjxoou78JbOEtE', pdf: '', practicaId: 'estadistica-2' },
+        { title: 'Tablas de distribución - I', video: 'https://www.youtube.com/embed/BGrB4raG2rA?si=VLqsBtggYU_IuVud', pdf: '', PrácticaId: 'estadistica-1' },
+        { title: 'Tablas de distribución - II', video: 'https://www.youtube.com/embed/D2cs5rBynkA?si=qUkjxoou78JbOEtE', pdf: '', PrácticaId: 'estadistica-2' },
       ],
       anatomia: [
-        { title: 'Tejido Epitelial', video: 'https://www.youtube.com/embed/o77bu0QsQqQ?si=7u93OjhImACBUGA3', pdf: '', practicaId: 'anatomia-1' },
-        { title: 'Tejido óseo', video: 'https://www.youtube.com/embed/iPSqE5Hld-E?si=W77QiDHRwQ4g7Rph', pdf: '', practicaId: 'anatomia-2' },
-        { title: 'Tejido cartilaginoso', video: 'https://www.youtube.com/embed/meUDcJrC6v8?si=Vx-rKIJ_E_ovuqGm', pdf: '', practicaId: 'anatomia-3' },
+        { title: 'Tejido Epitelial', video: 'https://www.youtube.com/embed/o77bu0QsQqQ?si=7u93OjhImACBUGA3', pdf: '', PrácticaId: 'anatomia-1' },
+        { title: 'Tejido óseo', video: 'https://www.youtube.com/embed/iPSqE5Hld-E?si=W77QiDHRwQ4g7Rph', pdf: '', PrácticaId: 'anatomia-2' },
+        { title: 'Tejido cartilaginoso', video: 'https://www.youtube.com/embed/meUDcJrC6v8?si=Vx-rKIJ_E_ovuqGm', pdf: '', PrácticaId: 'anatomia-3' },
       ],
       // Agrega más cursos y temas aquí
     };
 
-    let practicasData = {
-      'algebra-1': [{ text: 'Practica de Teoria de Exponentes', link: 'go:ALG01' },],
-      'algebra-2': [{ text: 'Practica de Polinomios', link: 'go:ALG02' }],
-      'algebra-3': [{ text: 'Practica de Productos Notables', link: 'go:ALG03' }],
-      'aritmetica-1': [{ text: 'Practica de Logica proposicional', link: 'go:ARIT01' }],
-      'aritmetica-2': [{ text: 'Practica de Teoria de Conjuntos', link: 'go:ARIT02' }],
-      'aritmetica-3': [{ text: 'Practica de Numeración', link: 'go:ARIT03' }],
-      'estadistica-1': [{ text: 'Practica de Tablas I', link: 'go:EST01' }],
-      'estadistica-2': [{ text: 'Practica de Tablas II', link: 'go:EST02' }],
+    let PrácticasData = {
+      'algebra-1': [{ text: 'Práctica de Teoria de Exponentes', link: 'go:ALG01' },],
+      'algebra-2': [{ text: 'Práctica de Polinomios', link: 'go:ALG02' }],
+      'algebra-3': [{ text: 'Práctica de Productos Notables', link: 'go:ALG03' }],
+      'aritmetica-1': [{ text: 'Práctica de Logica proposicional', link: 'go:ARIT01' }],
+      'aritmetica-2': [{ text: 'Práctica de Teoria de Conjuntos', link: 'go:ARIT02' }],
+      'aritmetica-3': [{ text: 'Práctica de Numeración', link: 'go:ARIT03' }],
+      'geometria-1': [{ text: 'Práctica de Segmentos - Angulos', link: 'go:GEO01' }],
+      'geometria-2': [{ text: 'Práctica de Triangulos', link: 'go:GEO02' }],
+      'geometria-3': [{ text: 'Práctica de Polígonos y Cuadriláteros', link: 'go:GEO03' }],
+      'geometria-4': [{ text: 'Práctica de Polígonos y Cuadriláteros', link: 'go:GEO03' }],
+      'trigonometria-1': [{ text: 'Práctica de Sistema de medida angular', link: 'go:TRI01' }],
+      'trigonometria-2': [{ text: 'Práctica de Razones trigonométricas', link: 'go:TRI02' }],
+      'estadistica-1': [{ text: 'Práctica de Tablas I', link: 'go:EST01' }],
+      'estadistica-2': [{ text: 'Práctica de Tablas II', link: 'go:EST02' }],
       'anatomia-1': [{ text: 'Quiz de huesos', link: 'go:ANA1' }],
-      // Agrega más prácticas según tus practicaId
+      'anatomia-2': [{ text: 'Quiz del Tejido Oseo', link: 'go:ANA2' }],
+      'anatomia-3': [{ text: 'Quiz del Tejido Catilaginoso', link: 'go:ANA3' }],
+      // Agrega más prácticas según tus PrácticaId
     };
 
     let currentCourseTemas = [];
@@ -209,7 +220,7 @@
         tituloTema.textContent = tema.title;
         videoFrame.src = tema.video;
         pdfFrame.src = tema.pdf;
-        practicaBtn.setAttribute('data-practica', tema.practicaId);
+        PrácticaBtn.setAttribute('data-Práctica', tema.PrácticaId);
         contenido.classList.remove('hidden');
 
         // Actualizar la clase activa en el menú lateral
@@ -289,26 +300,26 @@
       }
     });
 
-    practicaBtn.addEventListener('click', () => {
-      const id = practicaBtn.getAttribute('data-practica');
-      listaPracticas.innerHTML = ''; // Limpiar prácticas anteriores
+    PrácticaBtn.addEventListener('click', () => {
+      const id = PrácticaBtn.getAttribute('data-Práctica');
+      listaPrácticas.innerHTML = ''; // Limpiar prácticas anteriores
 
-      const practicas = practicasData[id] || [];
-      if (practicas.length > 0) {
-        practicas.forEach(p => {
+      const Prácticas = PrácticasData[id] || [];
+      if (Prácticas.length > 0) {
+        Prácticas.forEach(p => {
           const li = document.createElement('li');
-          li.classList.add('practica');
+          li.classList.add('Práctica');
           const a = document.createElement('a');
           a.href = p.link;
           a.target = '_blank';
           a.textContent = p.text;
           li.appendChild(a);
-          listaPracticas.appendChild(li);
+          listaPrácticas.appendChild(li);
         });
       } else {
         const li = document.createElement('li');
         li.textContent = 'No hay prácticas disponibles para este tema.';
-        listaPracticas.appendChild(li);
+        listaPrácticas.appendChild(li);
       }
       modal.classList.remove('hidden');
     });
