@@ -1,254 +1,694 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Opciones Modernas Responsivas</title>
+    <title>Universidades</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #0056b3;
+            --background-color: #f0f2f5;
+            --card-background: #fff;
+            --text-color: #333;
+            --light-text-color: #666;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
             margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Encabezado */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            color: var(--secondary-color);
+            margin: 0;
+        }
+        
+        /* Botón de Menú */
+        .menu-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .menu-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Menú de Filtros Vertical */
+        .filter-menu {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: var(--card-background);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+            padding: 10px 0;
+            min-width: 180px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .filter-menu.show {
+            display: flex;
+        }
+
+        .filter-option {
+            padding: 12px 20px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .filter-option:hover {
+            background-color: var(--background-color);
+        }
+        
+        .filter-option.active {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        
+        /* Contenedor de Opciones */
+        .opciones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        /* Nuevo diseño de las opciones */
+        .opcion {
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            background-color: #f7f7f7;
-            color: #333;
-        }
-
-        .opciones-container {
-            display: flex;
-            width: 100%;
-            max-width: 1024px;
-            margin: 30px auto;
-            box-sizing: border-box;
-            flex-wrap: wrap; /* Permitir que las opciones se envuelvan en pantallas pequeñas */
-            justify-content: center; /* Centrar las opciones horizontalmente */
-        }
-
-        .opcion {
-            flex: 1;
-            min-width: 300px; /* Ancho mínimo para cada opción */
-            margin: 10px;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 1px rgba(0, 0, 0, 0.2);
+            justify-content: flex-start;
+            text-decoration: none;
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            padding: 20px 10px;
+            box-shadow: 0 4px 12px var(--shadow-color);
             position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            background-color: white;
-            transition: transform 0.2s ease-in-out;
         }
 
         .opcion:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 4px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 8px 20px var(--shadow-color);
+        }
+        
+        .opcion-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--background-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .opcion::before {
-            content: "";
+        .opcion-icon img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+        
+        .opcion-text {
+            color: var(--text-color);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .opcion-desc {
+            color: var(--light-text-color);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            min-height: 40px;
+        }
+        
+        .modal-trigger {
             position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-trigger:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Estilos del Modal */
+        .modal {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 80%);
-            z-index: 0;
-            pointer-events: none;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 10px;
+            box-sizing: border-box;
         }
 
-        .texto-container {
-            flex-grow: 1; /* Ocupar el espacio disponible a la izquierda */
-            padding-right: 15px;
+        .modal-content {
+            background: var(--card-background);
+            padding: 25px;
+            border-radius: 16px;
+            width: 95%;
+            max-width: 400px;
             text-align: left;
             position: relative;
-            z-index: 1;
+            animation: fadeInScale 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-height: 80vh; /* Permite que el modal ocupe hasta un 80% de la pantalla */
+            overflow-y: auto; /* Habilita el scroll vertical cuando el contenido excede la altura */
         }
 
-        .texto-container h2 {
-            margin-top: 0;
-            margin-bottom: 12px;
-            color: #2c3e50;
-        }
-
-        .texto-container p {
-            margin-bottom: 20px;
-            font-size: 1em;
-            line-height: 1.6;
-            color: #555;
-        }
-
-        .botones-container {
+        .modal-header {
             display: flex;
-            gap: 12px;
-            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
-        .boton-examen {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #3498db;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
-            font-size: 0.95em;
+        .modal-header h2 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
             border: none;
+            font-size: 2rem;
+            color: var(--light-text-color);
             cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            transition: color 0.2s;
+        }
+        
+        .close-btn:hover {
+            color: var(--text-color);
         }
 
-        .boton-examen:hover {
-            background-color: #2980b9;
-            transform: scale(1.03);
+        .modal-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .modal-content li {
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            background-color: var(--background-color);
+            border-radius: 8px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
-        .imagen-circular-container {
-            width: 100%; /* Tamaño ajustado para la derecha */
-            height: auto;
-
-            position: relative;
-            z-index: 1;
-
-            margin-left: 20px; /* Espacio a la izquierda de la imagen */
+        .modal-content li:hover {
+            background-color: #e2eaf4;
+            transform: translateX(5px);
         }
 
-        .imagen-circular-container img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
+        .modal-content a {
+            display: block;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
         }
 
-        /* Media query para pantallas más pequeñas */
-        @media (max-width: 768px) {
-            .opciones-container {
-                flex-direction: column; /* Apilar las opciones */
-                align-items: stretch; /* Estirar las opciones horizontalmente */
-            }
-
-            .opcion {
-                flex-direction: row; /* Volver a la disposición horizontal interna */
-                align-items: center; /* Alinear verticalmente el texto y la imagen */
-                min-height: auto; /* Ajustar altura automáticamente */
-            }
-
-            .texto-container {
-                padding-right: 5px;
-                text-align: left;
-                margin-bottom: 0; /* Eliminar margen inferior en pantallas pequeñas */
-            }
-
-            .imagen-circular-container {
-                width: 100px; /* Reducir tamaño en móvil */
-                height: 100px;
-
-            }
-
-            .botones-container {
-                margin-top: 15px; /* Añadir margen superior para los botones */
-            }
-        }
-
-        /* Media query para pantallas aún más pequeñas (ej: 480px) */
-        @media (max-width: 480px) {
-            .texto-container {
-                padding-right: 0;
-                text-align: left;
-            }
-
-            .imagen-circular-container {
-                margin-left: 0;
-                margin-top: 15px;
-            }
-
-            .botones-container {
-                align-items: stretch; /* Estirar botones horizontalmente */
-            }
-            .texto-container h2 {
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-
-        .texto-container p {
+        .modal-content h4 {
+            margin-top: 0;
             margin-bottom: 5px;
-            font-size: 0.9em;
-            line-height: 1.4;
-            color: #555;
+            color: var(--primary-color);
         }
+
+        .modal-content p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-color);
         }
-        @media (max-width: 376px) {
-            .opcion {
-            flex: 1;
-            min-width: 300px; /* Ancho mínimo para cada opción */
-            margin: 5px;
-            padding: 20px;
+        
+        /* Animaciones */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="opciones-container">
-        <div class="opcion">
-            <div class="texto-container">
-                <h2>UNJFSC</h2>
-                <p>Prepárate con nuestros simulacros virtuales de la UNJFSC!</p>
-                <div class="botones-container">
-                    <a href="go:FAUSTINO" class="boton-examen">Ver Exámenes</a>
-                </div>
-            </div>
-            <div class="imagen-circular-container">
-                <img src="img/ujfsc.png" alt="Imagen Opción 1">
-            </div>
+    <div class="app-container">
+        <header class="header">
+            <h1>Universidades</h1>
+            <button class="menu-btn" id="menu-btn">Filtrar ▼</button>
+        </header>
+
+        <div class="filter-menu" id="filter-menu">
+            <div class="filter-option active" data-category="todos">Todos</div>
+            <div class="filter-option" data-category="lima">Lima</div>
+            <div class="filter-option" data-category="arequipa">Arequipa</div>
+            <div class="filter-option" data-category="cajamarca">Cajamarca</div>
         </div>
-        <div class="opcion">
-            <div class="texto-container">
-                <h2>UNAB</h2>
-                <p>Mide tus conocimientos en los examenes virutales de la UNAB.</p>
-                <div class="botones-container">
-                    <a href="go:UNAB" class="boton-examen">Ver Exámenes</a>
+
+        <div class="opciones-grid" id="opciones-grid">
+            <a href="go:UNJ" class="opcion" data-category="lima">
+                <div class="opcion-icon">
+                    <img src="img/ujfsc.png" alt="UNJFSC">
                 </div>
-            </div>
-            <div class="imagen-circular-container">
-                <img src="img/unab.png" alt="Imagen Opción 2">
-            </div>
-        </div>
-        <div class="opcion">
-            <div class="texto-container">
-                <h2>SAN MARCOS - LIMA</h2>
-                <p>Prueba los examenes virtuales tipo Examen de admisión para ingresar a la universidad <br>SAN MARCOS</p>
-                <div class="botones-container">
-                    <a href="go:SANMARCOS" class="boton-examen">Ver Exámenes</a>
+                <span class="opcion-text">UNJFSC</span>
+                <span class="opcion-desc">Universidad Nacional José Faustino Sánchez Carrión</span>
+                <div class="modal-trigger" data-modal="modal-unjfsc">i</div>
+            </a>
+            <a href="go:UNAB" class="opcion" data-category="lima">
+                <div class="opcion-icon">
+                    <img src="img/unab.png" alt="UNAB">
                 </div>
-            </div>
-            <div class="imagen-circular-container">
-                <img src="img/sanmarcos.png" alt="Imagen Opción 3">
-            </div>
-        </div>
-        <div class="opcion">
-            <div class="texto-container">
-                <h2>UNSA-AREQUIPA</h2>
-                <p>Examenes virtuales del tipo admision de UNSA - AREQUIPA</p>
-                <div class="botones-container">
-                    <a href="go:UNSA" class="boton-examen">Ver Exámenes</a>
+                <span class="opcion-text">UNAB</span>
+                <span class="opcion-desc">Universidad Nacional de Barranca</span>
+                <div class="modal-trigger" data-modal="modal-unab">i</div>
+            </a>
+            <a href="go:UNMSM" class="opcion" data-category="lima">
+                <div class="opcion-icon">
+                    <img src="img/sanmarcos.png" alt="UNMSM">
                 </div>
-            </div>
-            <div class="imagen-circular-container">
-                <img src="https://scontent-lim1-1.xx.fbcdn.net/v/t1.6435-9/95322957_135866061394977_6592645671168245760_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=2285d6&_nc_eui2=AeGz5SCy8PGqmlmwwmfywKT6J-kcoxNievcn6RyjE2J695VVrczVL_GvoTL1EbZ0Q33cqGM8poeR3qmsRxsC2LsL&_nc_ohc=8qHKbwj2gDAQ7kNvwE84ZjF&_nc_oc=AdnQg3CsW-SCe8IPsyrS6dyUKVE_V9otenj13dSx8tut8XeUTn2B1OKnK78-TUoxlHPSY2l0bFkHpD8n6gvTJqYo&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=fhVIKfq4sNfD6u8OOEC8Zg&oh=00_AfTfgr5HmBKC1zw-2hb-DEJ1-HgUEyL7UJ97HeYefgDWsA&oe=68AB15AD" alt="Imagen Opción 3">
-            </div>
-        </div>
-        <div class="opcion">
-            <div class="texto-container">
-                <h2>UNC - CAJAMARCA</h2>
-                <p>Examenes virtuales del tipo admision de UNC - CAJAMARCA</p>
-                <div class="botones-container">
-                    <a href="go:UNC" class="boton-examen">Ver Exámenes</a>
+                <span class="opcion-text">SAN MARCOS - LIMA</span>
+                <span class="opcion-desc">Universidad Nacional Mayor de San Marcos</span>
+                <div class="modal-trigger" data-modal="modal-unmsm">i</div>
+            </a>
+            <a href="go:PRX" class="opcion" data-category="lima">
+                <div class="opcion-icon">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Untels_01.png/250px-Untels_01.png" alt="UNTEL">
                 </div>
-            </div>
-            <div class="imagen-circular-container">
-                <img src="https://dondeestudiar.pe/wp-content/uploads/2023/11/universidad-de-cajamarca.png" alt="Imagen Opción 3">
-            </div>
+                <span class="opcion-text">UNTEL</span>
+                <span class="opcion-desc">Universidad Nacional Tecnológica de Lima Sur</span>
+                <div class="modal-trigger" data-modal="modal-untel">i</div>
+            </a>
+            <a href="go:UNSA" class="opcion" data-category="arequipa">
+                <div class="opcion-icon">
+                    <img src="https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/309431430_463080269192892_1387857276926275872_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFVB3MJq8tr_Ua5JjnIJ0LrBthQHtnseLQG2FAe2ex4tAtdyWq6bdS8MIBxcJbcs84q_IO-zWiUycUVIpaBwYLu&_nc_ohc=pmYVaz35WnsQ7kNvwFsxh5F&_nc_oc=AdmMEoE2DLIRs7B2Ymt4GmzLwJ3nxJvn64um1ZIm4rLtBNos-IOfnTO634bssrriJ4QtR5O2Ey7Fs_q_Xg9PHoHk&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=4ormSWHgU4IzVZCHamJ8fw&oh=00_AfZMm0M-ca_DG9xF4_LIhSP5dGILjjdIc1cK2qRYZoIWpw&oe=68D7D3A4" alt="UNSA">
+                </div>
+                <span class="opcion-text">UNSA - Arequipa</span>
+                <span class="opcion-desc">Universidad Nacional de San Agustín de Arequipa</span>
+                <div class="modal-trigger" data-modal="modal-unsa">i</div>
+            </a>
+            <a href="go:UNC" class="opcion" data-category="cajamarca">
+                <div class="opcion-icon">
+                    <img src="https://dondeestudiar.pe/wp-content/uploads/2023/11/universidad-de-cajamarca.png" alt="UNC">
+                </div>
+                <span class="opcion-text">UNC - Cajamarca</span>
+                <span class="opcion-desc">Universidad Nacional de Cajamarca</span>
+                <div class="modal-trigger" data-modal="modal-unc">i</div>
+            </a>
         </div>
     </div>
+
+    <div id="modal-unjfsc" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>UNJFSC</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <ul>
+                <li>
+                    <h4>Información de la universidad</h4>
+                    <a href="http://www.unjfsc.edu.pe/" target="_blank">Sitio web oficial UNJFSC</a>
+                </li>
+                <li>
+                    <h4>Carreras disponibles</h4>
+                    <p>La UNJFSC ofrece carreras en áreas como:
+                        <ul>
+                            <li>Ciencias Económicas, Contables y Financieras</li>
+                            <li>Ciencias Sociales</li>
+                            <li>Ingeniería</li>
+                            <li>Ciencias Agrarias</li>
+                            <li>Ciencias de la Salud</li>
+                            <li>Derecho y Ciencias Políticas</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>Requisitos de admisión</h4>
+                    <p>La información detallada se encuentra en la página de admisión de la universidad, generalmente incluye DNI, certificado de estudios y pago por derecho de inscripción. Se recomienda revisar el cronograma de admisión en su sitio web.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-unab" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>UNAB</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <ul>
+                <li>
+                    <h4>Información de la universidad</h4>
+                    <a href="https://www.portal.unab.edu.pe/" target="_blank">Sitio web oficial UNAB</a>
+                </li>
+                <li>
+                    <h4>Carreras disponibles</h4>
+                    <p>
+                        <ul>
+                            <li>Derecho y Ciencias Políticas</li>
+                            <li>Educación Inicial</li>
+                            <li>Administración</li>
+                            <li>Ingeniería Civil</li>
+                            <li>Ingeniería en Industrias Alimentarias</li>
+                            <li>Ingeniería Agrónoma</li>
+                            <li>Contabilidad y Finanzas</li>
+                            <li>Enfermería</li>
+                            <li>Obstetricia</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>Requisitos de admisión</h4>
+                    <p>
+                        <ul>
+                            <li>Fotografía digital tamaño pasaporte, fondo blanco y sin lentes.</li>
+                            <li>Copia simple de DNI.</li>
+                            <li>Declaración jurada de no encontrarse estudiando o haber culminado estudios de pregrado en una universidad pública.</li>
+                            <li>Certificado de estudios original o constancia de logros de aprendizaje.</li>
+                            <li>Pago por derecho de inscripción.</li>
+                        </ul>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-unmsm" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>UNMSM</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <ul>
+                <li>
+                    <h4>Información de la universidad</h4>
+                    <a href="https://admision.unmsm.edu.pe/" target="_blank">Sitio web de Admisión UNMSM</a>
+                </li>
+                <li>
+                    <h4>Carreras disponibles</h4>
+                    <p>La UNMSM ofrece más de 66 carreras en diversas áreas, incluyendo:
+                        <ul>
+                            <li>Ciencias de la Salud</li>
+                            <li>Humanidades y Ciencias Jurídicas</li>
+                            <li>Ingeniería y Ciencias Básicas</li>
+                            <li>Ciencias Económicas y de la Gestión</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>Requisitos de admisión</h4>
+                    <p>
+                        <ul>
+                            <li>DNI vigente.</li>
+                            <li>Comprobante de pago.</li>
+                            <li>Fotografía digital.</li>
+                            <li>La modalidad de ingreso varía (general, primeros puestos, traslado externo, etc.).</li>
+                            <li>Es crucial revisar el prospecto de admisión para el cronograma y requisitos específicos.</li>
+                        </ul>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-untel" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>UNTEL</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <ul>
+                <li>
+                    <h4>Información de la universidad</h4>
+                    <a href="http://www.untels.edu.pe/" target="_blank">Sitio web oficial UNTEL</a>
+                </li>
+                <li>
+                    <h4>Carreras disponibles</h4>
+                    <p>
+                        <ul>
+                            <li>Ingeniería de Sistemas</li>
+                            <li>Ingeniería Ambiental</li>
+                            <li>Ingeniería de la Energía</li>
+                            <li>Administración de Empresas</li>
+                            <li>Contabilidad</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>Requisitos de admisión</h4>
+                    <p>
+                        <ul>
+                            <li>DNI vigente.</li>
+                            <li>Certificado de estudios secundarios.</li>
+                            <li>Comprobante de pago por derecho de admisión.</li>
+                            <li>Revisar el cronograma en el sitio web para las fechas de inscripción y examen.</li>
+                        </ul>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-unsa" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>UNSA</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <ul>
+                <li>
+                    <h4>Información de la universidad</h4>
+                    <a href="http://www.unsa.edu.pe/" target="_blank">Sitio web oficial UNSA</a>
+                </li>
+                <li>
+                    <h4>Carreras disponibles</h4>
+                    <p>La UNSA cuenta con 53 carreras profesionales en áreas como:
+                        <ul>
+                            <li>Ciencias de la Salud</li>
+                            <li>Ciencias Sociales y Humanidades</li>
+                            <li>Ingeniería y Ciencias Exactas</li>
+                            <li>Ciencias Económicas y Administrativas</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>Requisitos de admisión</h4>
+                    <p>
+                        <ul>
+                            <li>DNI vigente.</li>
+                            <li>Certificado de Estudios o Constancia de Logros de Aprendizaje.</li>
+                            <li>Fotografía digital.</li>
+                            <li>Pago de derecho de inscripción.</li>
+                            <li>Es necesario inscribirse a través de su plataforma SIS Admisión para el proceso regular.</li>
+                        </ul>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="modal-unc" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>UNC</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <ul>
+                <li>
+                    <h4>Información de la universidad</h4>
+                    <a href="http://www.unc.edu.pe/" target="_blank">Sitio web oficial UNC</a>
+                </li>
+                <li>
+                    <h4>Carreras disponibles</h4>
+                    <p>La UNC ofrece diversas carreras en sus facultades, entre ellas:
+                        <ul>
+                            <li>Ciencias de la Salud</li>
+                            <li>Ingeniería</li>
+                            <li>Ciencias Económicas y de la Administración</li>
+                            <li>Ciencias Sociales</li>
+                            <li>Educación</li>
+                            <li>Ciencias Agrarias y Forestales</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <h4>Requisitos de admisión</h4>
+                    <p>
+                        <ul>
+                            <li>DNI vigente.</li>
+                            <li>Constancia de logros de aprendizaje o certificado de estudios.</li>
+                            <li>Comprobante de pago.</li>
+                            <li>Debes descargar y revisar la guía de postulante en su sitio web de admisión para detalles específicos.</li>
+                        </ul>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-btn');
+            const filterMenu = document.getElementById('filter-menu');
+            const filterOptions = document.querySelectorAll('.filter-option');
+            const opciones = document.querySelectorAll('.opcion');
+            const modalTriggers = document.querySelectorAll('.modal-trigger');
+            const modals = document.querySelectorAll('.modal');
+            const closeButtons = document.querySelectorAll('.close-btn');
+
+            // --- Funcionalidad del menú vertical ---
+            menuButton.addEventListener('click', () => {
+                filterMenu.classList.toggle('show');
+            });
+            
+            // Cerrar menú si se hace clic fuera de él
+            document.addEventListener('click', (event) => {
+                if (!menuButton.contains(event.target) && !filterMenu.contains(event.target)) {
+                    filterMenu.classList.remove('show');
+                }
+            });
+
+            // --- Funcionalidad de filtrado por categoría ---
+            filterOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    filterOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    const category = option.getAttribute('data-category');
+
+                    opciones.forEach(opcion => {
+                        const opcionCategory = opcion.getAttribute('data-category');
+                        if (category === 'todos' || opcionCategory === category) {
+                            opcion.style.display = 'flex';
+                        } else {
+                            opcion.style.display = 'none';
+                        }
+                    });
+                    
+                    // Cerrar el menú después de seleccionar una opción
+                    filterMenu.classList.remove('show');
+                });
+            });
+
+            // --- Funcionalidad de los Modals (actualizada) ---
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', event => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const modalId = trigger.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.style.display = 'flex';
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.closest('.modal').style.display = 'none';
+                    document.body.style.overflow = '';
+                });
+            });
+
+            modals.forEach(modal => {
+                modal.addEventListener('click', event => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    modals.forEach(modal => {
+                        if (modal.style.display === 'flex') {
+                            modal.style.display = 'none';
+                            document.body.style.overflow = '';
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </body>
+
 </html>
