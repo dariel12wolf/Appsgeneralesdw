@@ -60,7 +60,9 @@
 
     </div>
 
-    <p style="font-size: 20px; font-weight: 900; color: rgb(0, 73, 198); font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; border-bottom: 3px solid rgb(0, 73, 198); width: 95%; margin: 0 auto;">
+    <p style="font-size: 20px; font-weight: 900; color: rgb(0, 73, 198); 
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+            border-bottom: 3px solid rgb(0, 73, 198); width: 95%; margin: 0 auto;">
         Explora las opciones</p>
 
     <div class="opciones">
@@ -107,7 +109,7 @@
             <span class="close-btn-modal">&times;</span>
             <h3>¡Nueva Versión Disponible!</h3>
             <p>Hemos actualizado la aplicación con nuevas funciones y mejoras. ¡Actualiza para no perderte nada!</p>
-            <a href="https://play.google.com/store/apps/details?id=academy.xapp&pli=1" class="update-btn" target="_blank">ACTUALIZAR APP</a>
+            <a href="https://play.google.com/store/apps/details?id=academy.xapp" class="update-btn" target="_blank">ACTUALIZAR APP</a>
         </div>
     </div>
 
@@ -169,25 +171,33 @@
             const closeBtn = document.querySelector('.close-btn-modal');
             const updatePromptShown = localStorage.getItem('updatePromptShown');
 
-            // Verifica si el modal ya se mostró
-            if (!updatePromptShown) {
-                // Muestra el modal después de un pequeño retraso para asegurar que la página cargue
-                setTimeout(() => {
-                    updateModal.style.display = 'flex';
-                }, 1000);
+            // 1. Revisa si el modal ya se mostró. Si el valor en localStorage es "true", lo oculta.
+            if (updatePromptShown === 'true') {
+                updateModal.style.display = 'none';
+            } else {
+                updateModal.style.display = 'flex';
             }
 
-            // Maneja el clic en el botón de actualizar
-            updateBtn.addEventListener('click', function() {
+            // 2. Función para ocultar el modal y guardar el estado
+            function hideAndRecordUpdate() {
                 localStorage.setItem('updatePromptShown', 'true');
                 updateModal.style.display = 'none';
-                // La redirección al Play Store se maneja con el href del enlace
+            }
+
+            // 3. Maneja el clic en el botón de actualizar
+            updateBtn.addEventListener('click', function(event) {
+                // Evita la redirección inmediata para asegurar que el localStorage se guarde
+                event.preventDefault(); 
+                hideAndRecordUpdate();
+                // Redirige al usuario después de un breve retraso
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 100); 
             });
 
-            // Maneja el clic en el botón de cerrar
+            // 4. Maneja el clic en el botón de cerrar
             closeBtn.addEventListener('click', function() {
-                localStorage.setItem('updatePromptShown', 'true');
-                updateModal.style.display = 'none';
+                hideAndRecordUpdate();
             });
         });
     </script>
