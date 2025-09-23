@@ -1,242 +1,445 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PracticaxCurso</title>
+    <title>Practica de Cursos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #0056b3;
+            --background-color: #f0f2f5;
+            --card-background: #fff;
+            --text-color: #333;
+            --light-text-color: #666;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --gradient-1: #0050b1;
+            --gradient-2: #007bff8b;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Encabezado */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            color: var(--secondary-color);
+            margin: 0;
+        }
+        
+        .header p {
+            font-size: 0.9rem;
+            color: var(--light-text-color);
+            margin: 5px 0 0;
+            display: none; /* Ocultamos el subtítulo en este diseño */
+        }
+
+        /* Botón de Menú */
+        .menu-btn {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .menu-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Menú de Filtros Vertical */
+        .filter-menu {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: var(--card-background);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+            padding: 10px 0;
+            min-width: 180px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .filter-menu.show {
+            display: flex;
+        }
+
+        .filter-option {
+            padding: 12px 20px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .filter-option:hover {
+            background-color: var(--background-color);
+        }
+        
+        .filter-option.active {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+        
+        /* Contenedor de Opciones */
+        .opciones-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        /* Nuevo diseño de las opciones */
+        .opcion {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            padding: 20px 10px;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+        
+        .opcion.hide {
+            display: none;
+        }
+
+        .opcion-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .opcion-icon img {
+            width: 35px;
+            height: 35px;
+        }
+        
+        .opcion-text {
+            color: var(--text-color);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .opcion:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px var(--shadow-color);
+        }
+        
+        /* Estilos del Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .modal-content {
+            background: var(--card-background);
+            padding: 25px;
+            border-radius: 16px;
+            width: 95%;
+            max-width: 400px;
+            text-align: left;
+            position: relative;
+            animation: fadeInScale 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--light-text-color);
+            cursor: pointer;
+            line-height: 1;
+            padding: 0;
+            transition: color 0.2s;
+        }
+        
+        .close-btn:hover {
+            color: var(--text-color);
+        }
+
+        .modal-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .modal-content li {
+            margin-bottom: 10px;
+        }
+
+        .modal-content a {
+            display: block;
+            padding: 12px 15px;
+            background-color: var(--background-color);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .modal-content a:hover {
+            background-color: #e2eaf4;
+            transform: translateX(5px);
+        }
+        
+        /* Animaciones */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
-<style>
-    body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #ffffff;
-        margin: 0;
-        padding: 0;
-    }
-
-    .opciones {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 15px;
-        margin: 20px;
-        text-align: center;
-        padding: 10px;
-    }
-
-    .opcion {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 10px;
-        text-decoration: none;
-        background: linear-gradient(135deg, #0050b1, #007bff8b);
-        color: #fff;
-        border-radius: 12px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: #505050 2px solid;
-    }
-
-    .opcion img {
-        width: 70px;
-        height: 70px;
-        margin-bottom: 10px;
-    }
-
-    .opcion span {
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    .opcion:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .modal-content {
-        background: #ffffff;
-        padding: 20px;
-        border-radius: 20px;
-        width: 90%;
-        max-width: 300px;
-        text-align: left;
-        animation: fadeIn 0.3s ease;
-    }
-
-    .modal-content h2 {
-        margin-top: 0;
-        color: #007bff;
-        text-align: center;
-        text-decoration: underline;
-    }
-
-    .modal-content ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    .modal-content ul li {
-        margin: 10px 0;
-        display: flex;
-
-
-    }
-
-    .modal-content ul li a {
-        text-decoration: none;
-        color: #505050;
-        font-weight: bold;
-    }
-
-    .modal-content ul li a:hover {
-        color: #0056b3;
-    }
-
-    .close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 20px;
-        cursor: pointer;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: scale(0.9);
-        }
-
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-</style>
 
 <body>
-    <div class="opciones">
-        <!------------------------BLOQUE A--------------------------->
-        <a href="#" class="opcion" data-modal="modal-algebra">
-            <img src="img/algebra.png" alt="Álgebra">
-            <span>Álgebra</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-aritmetica">
-            <img src="img/aritmetica.png" alt="Aritmética">
-            <span>Aritmética</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-geometria">
-            <img src="img/geometria.png" alt="Geometría">
-            <span>Geometría</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-trigonometria">
-            <img src="img/trigonometria.png" alt="trigonometria">
-            <span>Trigonometría</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-estadistica">
-            <img src="img/estadistica.png" alt="estadistica">
-            <span>Estadística</span>
-        </a>
-        <!------------------------BLOQUE B--------------------------->
-        <a href="#" class="opcion" data-modal="modal-anatomia">
-            <img src="img/anatomia.png" alt="Anatomía">
-            <span>Anatomía</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-biologia">
-            <img src="img/biologia.png" alt="Biología">
-            <span>Biología</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-fisica">
-            <img src="img/fisica.png" alt="Anatomía">
-            <span>Física</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-quimica">
-            <img src="img/quimica.png" alt="Biología">
-            <span>Química</span>
-        </a>
-        <!------------------------BLOQUE C--------------------------->
+    <div class="app-container">
+        <header class="header">
+            <h1>Cursos</h1>
+            <button class="menu-btn" id="menu-btn">Filtros ▼</button>
+        </header>
 
-        <a href="#" class="opcion" data-modal="modal-literatura">
-            <img src="img/literatura.png" alt="Literatura">
-            <span>Literatura</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-aptitud">
-            <img src="img/aptitud.png" alt="Aptitud Verbal">
-            <span>Aptitud Verbal</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-lenguaje">
-            <img src="img/lenguaje.png" alt="Lenguaje">
-            <span>Lenguaje</span>
-        </a>
-        <!------------------------BLOQUE D--------------------------->
-        <a href="#" class="opcion" data-modal="modal-HP">
-            <img src="img/hp.png" alt="Historia del Perú">
-            <span>Historia del Perú</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-HU">
-            <img src="img/hu.png" alt="Historia Universal">
-            <span>Historia Universal</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-geografia">
-            <img src="img/geografia.png" alt="Geografia">
-            <span>Geografía</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-psicologia">
-            <img src="img/psicologia.png" alt="Psicologia">
-            <span>Psicología</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-filosofia">
-            <img src="img/filosofia.png" alt="Filosofia">
-            <span>Filosofía</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-economia">
-            <img src="img/economia.png" alt="Economia">
-            <span>Economía</span>
-        </a>
-        <a href="#" class="opcion" data-modal="modal-ciudadania">
-            <img src="img/ciudadania.png" alt="ciudadania">
-            <span>Ciudadania</span>
-        </a>
+        <div class="filter-menu" id="filter-menu">
+            <div class="filter-option active" data-category="todos">Todos</div>
+            <div class="filter-option" data-category="matematicas">Matemáticas</div>
+            <div class="filter-option" data-category="ciencias">Ciencias</div>
+            <div class="filter-option" data-category="comunicacion">Comunicación</div>
+            <div class="filter-option" data-category="sociales">Sociales</div>
+        </div>
+
+        <div class="opciones-grid" id="opciones-grid">
+            <a href="#" class="opcion" data-modal="modal-algebra" data-category="matematicas">
+                <div class="opcion-icon">
+                    <img src="img/algebra.png" alt="Álgebra">
+                </div>
+                <span class="opcion-text">Álgebra</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-aritmetica" data-category="matematicas">
+                <div class="opcion-icon">
+                    <img src="img/aritmetica.png" alt="Aritmética">
+                </div>
+                <span class="opcion-text">Aritmética</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-geometria" data-category="matematicas">
+                <div class="opcion-icon">
+                    <img src="img/geometria.png" alt="Geometría">
+                </div>
+                <span class="opcion-text">Geometría</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-trigonometria" data-category="matematicas">
+                <div class="opcion-icon">
+                    <img src="img/trigonometria.png" alt="Trigonometría">
+                </div>
+                <span class="opcion-text">Trigonometría</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-estadistica" data-category="matematicas">
+                <div class="opcion-icon">
+                    <img src="img/estadistica.png" alt="Estadística">
+                </div>
+                <span class="opcion-text">Estadística</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-anatomia" data-category="ciencias">
+                <div class="opcion-icon">
+                    <img src="img/anatomia.png" alt="Anatomía">
+                </div>
+                <span class="opcion-text">Anatomía</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-biologia" data-category="ciencias">
+                <div class="opcion-icon">
+                    <img src="img/biologia.png" alt="Biología">
+                </div>
+                <span class="opcion-text">Biología</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-fisica" data-category="ciencias">
+                <div class="opcion-icon">
+                    <img src="img/fisica.png" alt="Física">
+                </div>
+                <span class="opcion-text">Física</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-quimica" data-category="ciencias">
+                <div class="opcion-icon">
+                    <img src="img/quimica.png" alt="Química">
+                </div>
+                <span class="opcion-text">Química</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-literatura" data-category="comunicacion">
+                <div class="opcion-icon">
+                    <img src="img/literatura.png" alt="Literatura">
+                </div>
+                <span class="opcion-text">Literatura</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-aptitud" data-category="comunicacion">
+                <div class="opcion-icon">
+                    <img src="img/aptitud.png" alt="Aptitud Verbal">
+                </div>
+                <span class="opcion-text">Aptitud Verbal</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-lenguaje" data-category="comunicacion">
+                <div class="opcion-icon">
+                    <img src="img/lenguaje.png" alt="Lenguaje">
+                </div>
+                <span class="opcion-text">Lenguaje</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-HP" data-category="sociales">
+                <div class="opcion-icon">
+                    <img src="img/hp.png" alt="Historia del Perú">
+                </div>
+                <span class="opcion-text">Historia del Perú</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-HU" data-category="sociales">
+                <div class="opcion-icon">
+                    <img src="img/hu.png" alt="Historia Universal">
+                </div>
+                <span class="opcion-text">Historia Universal</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-geografia" data-category="sociales">
+                <div class="opcion-icon">
+                    <img src="img/geografia.png" alt="Geografía">
+                </div>
+                <span class="opcion-text">Geografía</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-psicologia" data-category="sociales">
+                <div class="opcion-icon">
+                    <img src="img/psicologia.png" alt="Psicología">
+                </div>
+                <span class="opcion-text">Psicología</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-filosofia" data-category="sociales">
+                <div class="opcion-icon">
+                    <img src="img/filosofia.png" alt="Filosofía">
+                </div>
+                <span class="opcion-text">Filosofía</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-economia" data-category="sociales">
+                <div class="opcion-icon">
+                    <img src="img/economia.png" alt="Economía">
+                </div>
+                <span class="opcion-text">Economía</span>
+            </a>
+            <a href="#" class="opcion" data-modal="modal-ciudadania" data-category="sociales">
+                <div class="opcion-icon">
+                    <img src="img/ciudadania.png" alt="Ciudadania">
+                </div>
+                <span class="opcion-text">Ciudadanía</span>
+            </a>
+        </div>
     </div>
-
-    <!-- Modal Templates -->
-    <!------------------------BLOQUE A--------------------------->
 
     <div id="modal-algebra" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Álgebra</h2>
+            <div class="modal-header">
+                <h2>Álgebra</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:ALG01">Tema 1: Teoria de Exponentes</a> </li>
+                <li><a href="go:ALG01">Tema 1: Teoria de Exponentes</a></li>
                 <li><a href="go:ALG02">Tema 2: Polinomios</a></li>
                 <li><a href="go:ALG03">Tema 3: Productos Notables</a></li>
                 <li><a href="go:PRX">Tema 4: División de polinomios</a></li>
                 <li><a href="go:PRX">Tema 5: Cocientes Notables</a></li>
                 <li><a href="go:PRX">Tema 6: Factorización</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
-
     <div id="modal-aritmetica" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Aritmética</h2>
+            <div class="modal-header">
+                <h2>Aritmética</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
                 <li><a href="go:ARIT01">Tema 1: Lógica proposicional</a></li>
                 <li><a href="go:ARIT02">Tema 2: Teoría de conjuntos</a></li>
@@ -244,359 +447,436 @@
                 <li><a href="go:PRX">Tema 4: Divisibilidad</a></li>
                 <li><a href="go:PRX">Tema 5: Números primos y compuestos</a></li>
                 <li><a href="go:PRX">Tema 6: Números racionales</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-geometria" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Geometría</h2>
+            <div class="modal-header">
+                <h2>Geometría</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:GEO01">Tema 1: Segmentos - Ángulos</a> </li>
+                <li><a href="go:GEO01">Tema 1: Segmentos - Ángulos</a></li>
                 <li><a href="go:GEO02">Tema 2: Triángulos</a></li>
                 <li><a href="go:GEO03">Tema 3: Congruencia de triángulos</a></li>
                 <li><a href="go:PRX">Tema 4: Polígonos - Cuadriláteros</a></li>
                 <li><a href="go:PRX">Tema 5: Circunferncia</a></li>
                 <li><a href="go:PRX">Tema 6: Puntos notables</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-trigonometria" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Trigonometría</h2>
+            <div class="modal-header">
+                <h2>Trigonometría</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:TRI01">Tema 1: Sistema de medida angular - Sector circular</a> </li>
+                <li><a href="go:TRI01">Tema 1: Sistema de medida angular - Sector circular</a></li>
                 <li><a href="go:TRI02">Tema 2: Razones trigonométricas de ángulos agudos</a></li>
                 <li><a href="go:TRI03">Tema 3: Razones trigonométricas de ángulos en posicion normal</a></li>
                 <li><a href="go:PRX">Tema 4: Reducción al primer cuadrante</a></li>
                 <li><a href="go:PRX">Tema 5: Identidades trigonométricas</a></li>
                 <li><a href="go:PRX">Tema 6: Ángulos compuestos y dobles</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE</a></li>
-                <li><a href="go:PRX">Tema 10:PROXIMAMENTE </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-estadistica" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Estadística</h2>
+            <div class="modal-header">
+                <h2>Estadística</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:EST01">Tema 1: Tabla de distribución de frecuencias I</a> </li>
+                <li><a href="go:EST01">Tema 1: Tabla de distribución de frecuencias I</a></li>
                 <li><a href="go:EST02">Tema 2: Tabla de distribución de frecuencias II</a></li>
                 <li><a href="go:EST03">Tema 3: Gráficos estadísticos</a></li>
                 <li><a href="go:PRX">Tema 4: Medida de tendencia central</a></li>
                 <li><a href="go:PRX">Tema 5: Medidas de posición</a></li>
                 <li><a href="go:PRX">Tema 6: Medidas de dispersión</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
-    <!------------------------BLOQUE B--------------------------->
     <div id="modal-anatomia" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Anatomía</h2>
+            <div class="modal-header">
+                <h2>Anatomía</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:ANA01">Tema 1: Tejido epitelial</a> </li>
+                <li><a href="go:ANA01">Tema 1: Tejido epitelial</a></li>
                 <li><a href="go:ANA02">Tema 2: Tejido cartilaginoso - Tejido óseo</a></li>
                 <li><a href="go:ANA03">Tema 3: Tejido muscular</a></li>
                 <li><a href="go:ANA04">Tema 4: Tejido nervioso</a></li>
                 <li><a href="go:PRX">Tema 5: Tejido sanguíneo</a></li>
                 <li><a href="go:PRX">Tema 6: Aparato cardiovascular</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-biologia" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Biología</h2>
+            <div class="modal-header">
+                <h2>Biología</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:BIO01">Tema 1: Origen de la vida - Evolución</a> </li>
+                <li><a href="go:BIO01">Tema 1: Origen de la vida - Evolución</a></li>
                 <li><a href="go:BIO02">Tema 2: Bioelementos - Agua - Sales minerales</a></li>
                 <li><a href="go:BIO03">Tema 3: Glúcidos - Lípidos - Proteínas</a></li>
                 <li><a href="go:PRX">Tema 4: Vitaminas - Ácidos nucleicos</a></li>
                 <li><a href="go:PRX">Tema 5: Citología</a></li>
                 <li><a href="go:PRX">Tema 6: Metabolismo celular</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-fisica" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Física</h2>
+            <div class="modal-header">
+                <h2>Física</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:FIS01">Tema 1: Vectores</a> </li>
+                <li><a href="go:FIS01">Tema 1: Vectores</a></li>
                 <li><a href="go:FIS02">Tema 2: Cinemática I</a></li>
                 <li><a href="go:FIS03">Tema 3: Cinemática II</a></li>
                 <li><a href="go:PRX">Tema 4: Estática</a></li>
                 <li><a href="go:PRX">Tema 5: Dinámica</a></li>
                 <li><a href="go:PRX">Tema 6: Trabajo - Potencia - Energía</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-quimica" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Química</h2>
+            <div class="modal-header">
+                <h2>Química</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:QUI01">Tema 1: Estructura atómica</a> </li>
+                <li><a href="go:QUI01">Tema 1: Estructura atómica</a></li>
                 <li><a href="go:QUI02">Tema 2: Configuración electrónica - Tabla periódica</a></li>
                 <li><a href="go:QUI03">Tema 3: Enlace Químico</a></li>
                 <li><a href="go:PRX">Tema 4: Nomenclatura inorgánica</a></li>
                 <li><a href="go:PRX">Tema 5: Unidades químicas de masa</a></li>
                 <li><a href="go:PRX">Tema 6: Estado gaseoso</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
-
-
-    <!------------------------BLOQUE C--------------------------->
     <div id="modal-literatura" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Literatura</h2>
+            <div class="modal-header">
+                <h2>Literatura</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:LIT01">Tema 1: Teoría Literaria</a> </li>
+                <li><a href="go:LIT01">Tema 1: Teoría Literaria</a></li>
                 <li><a href="go:LIT02">Tema 2: Clasicismo - Medievalismo</a></li>
                 <li><a href="go:LIT03">Tema 3: Renacimiento - Neoclasicismo</a></li>
                 <li><a href="go:PRX">Tema 4: Romanticismo - Realismo</a></li>
                 <li><a href="go:PRX">Tema 5: Simbolismo - Vanguardismo</a></li>
                 <li><a href="go:PRX">Tema 6: Siglo de oro Español</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-aptitud" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Aptitud Verbal</h2>
+            <div class="modal-header">
+                <h2>Aptitud Verbal</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:APT01">Tema 1: Etimología grecolatina</a> </li>
+                <li><a href="go:APT01">Tema 1: Etimología grecolatina</a></li>
                 <li><a href="go:APT02">Tema 2: Relaciones semánticas y formales</a></li>
                 <li><a href="go:APT03">Tema 3: Sinonimia</a></li>
                 <li><a href="go:PRX">Tema 4: Antonimia</a></li>
                 <li><a href="go:PRX">Tema 5: Series verbales</a></li>
                 <li><a href="go:PRX">Tema 6: Analogías</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-lenguaje" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Lenguaje</h2>
+            <div class="modal-header">
+                <h2>Lenguaje</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:LEN01">Tema 1: La comunicación y el lenguaje</a> </li>
+                <li><a href="go:LEN01">Tema 1: La comunicación y el lenguaje</a></li>
                 <li><a href="go:LEN02">Tema 2: El signo lingüístico - Sonidos del lenguaje</a></li>
                 <li><a href="go:LEN03">Tema 3: La morfología lingüística</a></li>
                 <li><a href="go:PRX">Tema 4: Ortografía</a></li>
                 <li><a href="go:PRX">Tema 5: Lenguaje audiovisual</a></li>
                 <li><a href="go:PRX">Tema 6: Sustantivos</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
-
-    <!------------------------BLOQUE D--------------------------->
     <div id="modal-HP" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Historia del Perú</h2>
+            <div class="modal-header">
+                <h2>Historia del Perú</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:HP01">Tema 1: Poblamiento americano y peruano</a> </li>
+                <li><a href="go:HP01">Tema 1: Poblamiento americano y peruano</a></li>
                 <li><a href="go:HP02">Tema 2: Altas culturas</a></li>
                 <li><a href="go:HP03">Tema 3: Tahuantinsuyo</a></li>
                 <li><a href="go:PRX">Tema 4: Invasión europea al Tahuantinsuyo</a></li>
                 <li><a href="go:PRX">Tema 5: Virreinato</a></li>
                 <li><a href="go:PRX">Tema 6: Rebeliones indígenas</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-HU" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Historia Universal</h2>
+            <div class="modal-header">
+                <h2>Historia Universal</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:HU01">Tema 1: Antropogénesis - Prehistoria</a> </li>
+                <li><a href="go:HU01">Tema 1: Antropogénesis - Prehistoria</a></li>
                 <li><a href="go:HU02">Tema 2: Cultura Caldeo - Asiria - Cultura Egipcia</a></li>
                 <li><a href="go:HU03">Tema 3: Cultura Griega</a></li>
                 <li><a href="go:PRX">Tema 4: Cultura Romana</a></li>
                 <li><a href="go:PRX">Tema 5: Bárbaros - Imperio Carolingio / Imperio Bizantino</a></li>
                 <li><a href="go:PRX">Tema 6: Árabes</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-geografia" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Geografía</h2>
+            <div class="modal-header">
+                <h2>Geografía</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:GRF01">Tema 1: Ciencia geográfica</a> </li>
+                <li><a href="go:GRF01">Tema 1: Ciencia geográfica</a></li>
                 <li><a href="go:GRF02">Tema 2: El universo</a></li>
                 <li><a href="go:GRF03">Tema 3: Heliósfera</a></li>
                 <li><a href="go:PRX">Tema 4: La tierra</a></li>
                 <li><a href="go:PRX">Tema 5: Geósfera</a></li>
                 <li><a href="go:PRX">Tema 6: Atmósfera</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-psicologia" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Psicología</h2>
+            <div class="modal-header">
+                <h2>Psicología</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:PSC01">Tema 1: Ciencia psicológica</a> </li>
+                <li><a href="go:PSC01">Tema 1: Ciencia psicológica</a></li>
                 <li><a href="go:PSC02">Tema 2: Escuelas psicológicas</a></li>
                 <li><a href="go:PSC03">Tema 3: Factores biológicos y ambientales del comportamiento humano</a></li>
                 <li><a href="go:PRX">Tema 4: Desarrollo humano - Sexualidad</a></li>
                 <li><a href="go:PRX">Tema 5: Neurociencia</a></li>
                 <li><a href="go:PRX">Tema 6: Sencación - Percepción</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-filosofia" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Filosofía</h2>
+            <div class="modal-header">
+                <h2>Filosofía</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:FIL01">Tema 1: Historia de la filosofía</a> </li>
+                <li><a href="go:FIL01">Tema 1: Historia de la filosofía</a></li>
                 <li><a href="go:FIL02">Tema 2: Filosofía presocrática</a></li>
                 <li><a href="go:FIL03">Tema 3: Filosofía socrática</a></li>
                 <li><a href="go:PRX">Tema 4: Filosofía grecorromana</a></li>
                 <li><a href="go:PRX">Tema 5: Filosofía medieval</a></li>
                 <li><a href="go:PRX">Tema 6: Filosofía moderna</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-economia" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Economía</h2>
+            <div class="modal-header">
+                <h2>Economía</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:ECO01">Tema 1: La ciencia económica</a> </li>
+                <li><a href="go:ECO01">Tema 1: La ciencia económica</a></li>
                 <li><a href="go:ECO02">Tema 2: Necesidades humanas, bienes y servicios</a></li>
                 <li><a href="go:ECO03">Tema 3: Procesos económicos</a></li>
                 <li><a href="go:PRX">Tema 4: Factores clásicos de la producción</a></li>
                 <li><a href="go:PRX">Tema 5: La producción</a></li>
-                <li><a href="go:PRX">Tema 6: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 6: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
     <div id="modal-ciudadania" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Ciudadanía</h2>
+            <div class="modal-header">
+                <h2>Ciudadanía</h2>
+                <button class="close-btn">&times;</button>
+            </div>
             <ul>
-                <li><a href="go:CIU01">Tema 1: Sujeto de derecho</a> </li>
+                <li><a href="go:CIU01">Tema 1: Sujeto de derecho</a></li>
                 <li><a href="go:CIU02">Tema 2: Derechos humanos</a></li>
                 <li><a href="go:CIU03">Tema 3: Familia y parentesco</a></li>
                 <li><a href="go:PRX">Tema 4: El matrimonio</a></li>
                 <li><a href="go:PRX">Tema 5: Estado - Norma jurídica</a></li>
                 <li><a href="go:PRX">Tema 6: Garantías contitucionales</a></li>
-                <li><a href="go:PRX">Tema 7: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 8: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 9: PROXIMAMENTE...</a></li>
-                <li><a href="go:PRX">Tema 10: PROXIMAMENTE... </a></li>
+                <li><a href="go:PRX">Tema 7: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 8: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 9: PRÓXIMAMENTE...</a></li>
+                <li><a href="go:PRX">Tema 10: PRÓXIMAMENTE...</a></li>
             </ul>
         </div>
     </div>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const menuButton = document.getElementById('menu-btn');
+            const filterMenu = document.getElementById('filter-menu');
+            const filterOptions = document.querySelectorAll('.filter-option');
             const opciones = document.querySelectorAll('.opcion');
             const modals = document.querySelectorAll('.modal');
-            const closeButtons = document.querySelectorAll('.close');
+            const closeButtons = document.querySelectorAll('.close-btn');
 
-            // Abrir modal
+            // --- Funcionalidad del menú vertical ---
+            menuButton.addEventListener('click', () => {
+                filterMenu.classList.toggle('show');
+            });
+            
+            // Cerrar menú si se hace clic fuera de él
+            document.addEventListener('click', (event) => {
+                if (!menuButton.contains(event.target) && !filterMenu.contains(event.target)) {
+                    filterMenu.classList.remove('show');
+                }
+            });
+
+            // --- Funcionalidad de filtrado por categoría ---
+            filterOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    filterOptions.forEach(opt => opt.classList.remove('active'));
+                    option.classList.add('active');
+                    const category = option.getAttribute('data-category');
+
+                    opciones.forEach(opcion => {
+                        const opcionCategory = opcion.getAttribute('data-category');
+                        if (category === 'todos' || opcionCategory === category) {
+                            opcion.style.display = 'flex';
+                        } else {
+                            opcion.style.display = 'none';
+                        }
+                    });
+                    
+                    // Cerrar el menú después de seleccionar una opción
+                    filterMenu.classList.remove('show');
+                });
+            });
+
+            // --- Funcionalidad de los Modals (se mantiene igual) ---
             opciones.forEach(opcion => {
                 opcion.addEventListener('click', event => {
                     event.preventDefault();
                     const modalId = opcion.getAttribute('data-modal');
                     const modal = document.getElementById(modalId);
-                    if (modal) modal.style.display = 'flex';
+                    if (modal) {
+                        modal.style.display = 'flex';
+                        document.body.style.overflow = 'hidden';
+                    }
                 });
             });
 
-            // Cerrar modal
             closeButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    button.parentElement.parentElement.style.display = 'none';
+                    button.closest('.modal').style.display = 'none';
+                    document.body.style.overflow = '';
                 });
             });
 
-            // Cerrar modal al hacer clic fuera del contenido
             modals.forEach(modal => {
                 modal.addEventListener('click', event => {
                     if (event.target === modal) {
                         modal.style.display = 'none';
+                        document.body.style.overflow = '';
                     }
                 });
             });
-        });
 
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    modals.forEach(modal => {
+                        if (modal.style.display === 'flex') {
+                            modal.style.display = 'none';
+                            document.body.style.overflow = '';
+                        }
+                    });
+                }
+            });
+        });
     </script>
 </body>
 
