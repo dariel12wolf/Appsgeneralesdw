@@ -43,12 +43,13 @@ body {
   padding-bottom: 5%;
   position: relative;
 }
+
 .projetos-slider button {
   color: rgba(255, 255, 255, 0);
   border-radius: 40px;
   width: 1px;
   height: 1px;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 152, 152, 0);
   border: none;
   margin: 1px;
 }
@@ -248,13 +249,15 @@ body {
   width: 110px;
   height: 100px;
 }
-.tituloinicio{
-  font-size: 30px; 
-  font-weight: 900; 
-  color: rgb(0, 73, 198); 
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+.tituloinicio {
+  font-size: 30px;
+  font-weight: 900;
+  color: rgb(0, 73, 198);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   margin: 0;
 }
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -304,19 +307,100 @@ body {
   font-weight: bold;
 }
 
+/* Estilos del Modal de Actualización */
+.update-modal {
+  display: none;
+  /* Oculto por defecto */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.update-modal-content {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  vertical-align: middle;
+  max-width: 350px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.update-modal-content h3 {
+  color: #007bff;
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+
+.update-modal-content p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.update-modal-content .close-btn-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.update-modal-content .close-btn-modal:hover,
+.update-modal-content .close-btn-modal:focus {
+  color: #000;
+}
+
+.update-modal-content .update-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 25px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+.update-modal-content .update-btn:hover {
+  background-color: #0056b3;
+}
+
 /* Responsive para pantallas menores a 760px */
 @media (max-width: 760px) {
   .opciones {
     grid-template-columns: repeat(2, 1fr);
   }
-  .tituloinicio{
+
+  .tituloinicio {
     font-size: 25px;
   }
+
   .inicio img {
     width: 80px;
     height: 70px;
   }
-  .tituloinicio2{
+
+  .tituloinicio2 {
     font-size: 12px;
   }
 }
@@ -336,14 +420,20 @@ body {
   .opcion span {
     font-size: 12px;
   }
+
   .inicio img {
     width: 80px;
     height: 70px;
   }
-  .tituloinicio{
+
+  .tituloinicio {
     font-size: 20px;
   }
-  .tituloinicio2{
-    font-size: 10px; width: auto; margin: 0 ; color: rgb(94, 94, 94);
+
+  .tituloinicio2 {
+    font-size: 10px;
+    width: auto;
+    margin: 0;
+    color: rgb(94, 94, 94);
   }
 }
